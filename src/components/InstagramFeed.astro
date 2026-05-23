@@ -1,0 +1,236 @@
+---
+const handle = 'jbeinteriorsltd';
+const profileUrl = `https://www.instagram.com/${handle}/`;
+
+interface Post {
+  id: string;
+  permalink: string;
+  media_url: string;
+  alt: string;
+}
+
+interface Props {
+  posts?: Post[];
+}
+
+/* Posts are passed in by the page (e.g. fetched at build time from the
+   Instagram Graph API, or hand-curated in the content collection). When the
+   feed isn't wired up yet, we render a polished placeholder tile set using
+   the hero photography so the section reads as designed. */
+const placeholderPosts: Post[] = [
+  {
+    id: 'placeholder-1',
+    permalink: profileUrl,
+    media_url: '/images/hero/nandos-liverpool.jpg',
+    alt: "Nando's Liverpool interior",
+  },
+  {
+    id: 'placeholder-2',
+    permalink: profileUrl,
+    media_url: '/images/hero/wagamamas-east-midlands.jpg',
+    alt: "Wagamama's East Midlands banquette",
+  },
+  {
+    id: 'placeholder-3',
+    permalink: profileUrl,
+    media_url: '/images/hero/parsons.jpg',
+    alt: 'Parsons washroom detail',
+  },
+  {
+    id: 'placeholder-4',
+    permalink: profileUrl,
+    media_url: '/images/hero/nandos-clydebank.jpg',
+    alt: "Nando's Clydebank booth seating",
+  },
+];
+
+const { posts = placeholderPosts } = Astro.props;
+const displayPosts = posts.slice(0, 4);
+const isPlaceholder = posts === placeholderPosts;
+---
+
+<section class="ig-feed" aria-label="Latest from Instagram">
+  <div class="ig-feed__container">
+    <header class="ig-feed__header">
+      <p class="eyebrow">03 / Latest</p>
+      <h2 class="ig-feed__heading">From the studio.</h2>
+    </header>
+
+    <ul class="ig-feed__grid" role="list">
+      {displayPosts.map((post) => (
+        <li class="ig-feed__tile">
+          <a
+            href={post.permalink}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="ig-feed__link"
+            aria-label={`Open Instagram post: ${post.alt}`}
+          >
+            <img
+              src={post.media_url}
+              alt={post.alt}
+              loading="lazy"
+              decoding="async"
+              class="ig-feed__image"
+            />
+            <span class="ig-feed__overlay" aria-hidden="true">
+              <span class="ig-feed__overlay-label">View on Instagram &rarr;</span>
+            </span>
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <p class="ig-feed__follow">
+      <a href={profileUrl} target="_blank" rel="noopener noreferrer">
+        Follow @{handle} on Instagram &rarr;
+      </a>
+    </p>
+
+    {isPlaceholder && (
+      <p class="ig-feed__placeholder-note" aria-live="polite">
+        Showing placeholder tiles &mdash; live feed not yet connected.
+      </p>
+    )}
+  </div>
+</section>
+
+<style>
+  .ig-feed {
+    background: var(--paper);
+    padding-block: var(--space-xl);
+  }
+
+  .ig-feed__container {
+    max-width: var(--grid-max);
+    margin-inline: auto;
+    padding-inline: var(--grid-margin);
+  }
+
+  .ig-feed__header {
+    margin-bottom: var(--space-l);
+  }
+
+  .ig-feed__heading {
+    font-size: var(--t-display-l);
+    font-weight: 300;
+    letter-spacing: var(--ls-display);
+    line-height: var(--lh-display);
+    margin-top: var(--space-s);
+    color: var(--ink);
+  }
+
+  .ig-feed__grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--bone);
+    border-top: 1px solid var(--bone);
+    border-bottom: 1px solid var(--bone);
+  }
+
+  .ig-feed__tile {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    background: var(--paper);
+    overflow: hidden;
+  }
+
+  .ig-feed__link {
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    color: inherit;
+  }
+
+  .ig-feed__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+
+  .ig-feed__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(17, 17, 17, 0);
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    padding: var(--space-s);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .ig-feed__overlay-label {
+    font-size: var(--t-eyebrow);
+    font-weight: 500;
+    letter-spacing: var(--ls-eyebrow);
+    text-transform: uppercase;
+    color: var(--paper);
+    background: rgba(17, 17, 17, 0.85);
+    padding: 6px 10px;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .ig-feed__image,
+    .ig-feed__overlay {
+      transition:
+        opacity var(--motion-medium) var(--ease-out),
+        background-color var(--motion-medium) var(--ease-out);
+    }
+  }
+
+  .ig-feed__link:hover .ig-feed__image,
+  .ig-feed__link:focus-visible .ig-feed__image {
+    opacity: 0.9;
+  }
+
+  .ig-feed__link:hover .ig-feed__overlay,
+  .ig-feed__link:focus-visible .ig-feed__overlay {
+    opacity: 1;
+    background: rgba(17, 17, 17, 0.15);
+  }
+
+  .ig-feed__follow {
+    margin-top: var(--space-l);
+    text-align: center;
+  }
+
+  .ig-feed__follow a {
+    font-size: var(--t-body-m);
+    color: var(--ink);
+    border-bottom: 1px solid var(--bone);
+    padding-bottom: 2px;
+  }
+
+  .ig-feed__follow a:hover {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+
+  .ig-feed__placeholder-note {
+    margin-top: var(--space-m);
+    text-align: center;
+    font-size: var(--t-caption);
+    color: var(--slate);
+    font-style: italic;
+  }
+
+  @media (max-width: 768px) {
+    .ig-feed__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 420px) {
+    .ig-feed__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
