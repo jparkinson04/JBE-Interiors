@@ -23,3 +23,9 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 .vercel
+
+# Source assets dropped at the project root for processing
+# (kept locally so we can re-process; final web-ready versions live in /public/)
+/*.jpg
+/*.jpeg
+/*.png
