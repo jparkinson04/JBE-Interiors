@@ -2,9 +2,12 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
 import InstagramFeed from '../components/InstagramFeed.astro';
+import { fetchBeholdPosts } from '../lib/instagram';
+
+const posts = await fetchBeholdPosts(import.meta.env.BEHOLD_FEED_ID);
 ---
 
 <BaseLayout title="JBE Interiors — Interiors built for hospitality.">
   <Hero />
-  <InstagramFeed />
+  <InstagramFeed posts={posts ?? undefined} />
 </BaseLayout>

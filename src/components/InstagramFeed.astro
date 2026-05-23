@@ -1,13 +1,8 @@
 ---
+import type { Post } from '../lib/instagram';
+
 const handle = 'jbeinteriorsltd';
 const profileUrl = `https://www.instagram.com/${handle}/`;
-
-interface Post {
-  id: string;
-  permalink: string;
-  media_url: string;
-  alt: string;
-}
 
 interface Props {
   posts?: Post[];
