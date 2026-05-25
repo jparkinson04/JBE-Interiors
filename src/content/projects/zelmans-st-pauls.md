@@ -20,4 +20,5 @@ description: |
 
   Working alongside Shed Design, the ten-week programme delivered the
   full reconfiguration to a £700k budget.
+gallery: []
 ---

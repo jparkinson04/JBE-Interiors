@@ -90,6 +90,28 @@ html, body {
   padding: 0;
 }
 
+/* Lenis smooth scroll — disables native scroll behaviour while the JS
+   animation is running. The classes are toggled by Lenis itself. */
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
 body {
   background: var(--paper);
   color: var(--ink);

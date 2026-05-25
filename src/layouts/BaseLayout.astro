@@ -43,5 +43,42 @@ const { title, description = 'JBE Interiors — restaurant and retail fit-outs a
         min-height: calc(100vh - var(--header-height));
       }
     </style>
+
+    <script>
+      import Lenis from 'lenis';
+
+      /* Inertial smooth-scroll. Skipped for visitors who've opted into
+         reduced motion — they get native browser scrolling instead. */
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (!prefersReduced) {
+        const lenis = new Lenis({
+          duration: 1.4,
+          easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+          smoothWheel: true,
+          wheelMultiplier: 0.9,
+          touchMultiplier: 1.6,
+        });
+
+        const raf = (time: number) => {
+          lenis.raf(time);
+          requestAnimationFrame(raf);
+        };
+        requestAnimationFrame(raf);
+
+        /* Anchor links use Lenis's own scrollTo so the easing matches. */
+        document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach((a) => {
+          a.addEventListener('click', (e) => {
+            const id = a.getAttribute('href')?.slice(1);
+            if (!id) return;
+            const target = document.getElementById(id);
+            if (target) {
+              e.preventDefault();
+              lenis.scrollTo(target, { offset: -80 });
+            }
+          });
+        });
+      }
+    </script>
   </body>
 </html>

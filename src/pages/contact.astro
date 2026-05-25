@@ -3,186 +3,232 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout title="Contact — JBE Interiors">
-  <section class="contact-page">
-    <div class="contact-page__container">
-      <header class="contact-page__heading">
+  <section class="contact">
+    <div class="contact__inner">
+      <header class="contact__header">
         <p class="eyebrow">Contact</p>
         <h1>Let&rsquo;s talk.</h1>
-        <p class="contact-page__intro">
+        <p class="contact__lead">
           For new project enquiries, questions, or to discuss a brief &mdash;
           get in touch directly. We respond within one working day.
         </p>
       </header>
 
-      <div class="contact-page__grid">
-        <article class="contact-page__direct">
+      <div class="contact__card">
+        <div class="contact__col">
           <p class="eyebrow">Direct</p>
-          <p class="contact-page__name">Jason Beedle</p>
-          <p class="contact-page__role">Managing Director</p>
-          <a href="tel:+441302322202" class="contact-page__phone" aria-label="Call 01302 322 202">
+          <p class="contact__name">Jason Beedle</p>
+          <p class="contact__role">Managing Director</p>
+          <a href="tel:+441302322202" class="contact__phone" aria-label="Call 01302 322 202">
             01302&nbsp;322&nbsp;202
           </a>
-          <a href="mailto:jason@jbeinteriors.com" class="contact-page__email">
+          <a href="mailto:jason@jbeinteriors.com" class="contact__email">
             jason@jbeinteriors.com
           </a>
-        </article>
+        </div>
 
-        <article class="contact-page__studio">
+        <div class="contact__col">
           <p class="eyebrow">Studio</p>
-          <address class="contact-page__address">
+          <address class="contact__address">
             JBE Interiors Ltd<br />
             305 Churchway<br />
-            Doncaster<br />
-            DN1&nbsp;2TB
+            Doncaster, DN1&nbsp;2TB
           </address>
-          <p class="contact-page__hours">
+          <p class="contact__hours">
             Mon&ndash;Fri, 8:30am&ndash;6pm.<br />
             Site visits by appointment.
           </p>
-        </article>
-      </div>
+        </div>
 
-      <footer class="contact-page__social">
-        <p class="eyebrow">Follow</p>
-        <ul class="contact-page__social-list" role="list">
-          <li>
-            <a href="https://www.instagram.com/jbeinteriorsltd/" target="_blank" rel="noopener noreferrer">
-              Instagram&nbsp;&mdash;&nbsp;@jbeinteriorsltd&nbsp;&rarr;
-            </a>
-          </li>
-          <li>
-            <a href="https://www.linkedin.com/company/jbe-interiors/" target="_blank" rel="noopener noreferrer">
-              LinkedIn&nbsp;&mdash;&nbsp;JBE Interiors&nbsp;&rarr;
-            </a>
-          </li>
-        </ul>
-      </footer>
+        <div class="contact__col">
+          <p class="eyebrow">Follow</p>
+          <ul class="contact__social" role="list">
+            <li>
+              <a href="https://www.instagram.com/jbeinteriorsltd/" target="_blank" rel="noopener noreferrer">
+                Instagram&nbsp;&rarr;
+              </a>
+              <span class="contact__handle">@jbeinteriorsltd</span>
+            </li>
+            <li>
+              <a href="https://www.linkedin.com/company/jbe-interiors/" target="_blank" rel="noopener noreferrer">
+                LinkedIn&nbsp;&rarr;
+              </a>
+              <span class="contact__handle">JBE Interiors</span>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
   </section>
 </BaseLayout>
 
 <style>
-  .contact-page {
-    background: var(--paper);
-    padding-block: var(--space-xl) var(--space-2xl);
+  .contact {
+    background: var(--ink);
+    color: var(--paper);
+    min-height: calc(100vh - var(--header-height));
+    display: flex;
+    align-items: center;
+    padding-block: var(--space-xl);
   }
 
-  .contact-page__container {
-    max-width: var(--grid-max);
+  .contact__inner {
+    width: 100%;
+    max-width: 1180px;
     margin-inline: auto;
     padding-inline: var(--grid-margin);
   }
 
-  .contact-page__heading {
-    max-width: 880px;
-    margin-bottom: var(--space-2xl);
+  .contact__header {
+    text-align: center;
+    margin-bottom: var(--space-l);
+    max-width: 720px;
+    margin-inline: auto;
   }
 
-  .contact-page__heading h1 {
-    font-size: var(--t-display-l);
+  .contact__header .eyebrow {
+    color: color-mix(in srgb, var(--paper) 60%, transparent);
+  }
+
+  .contact__header h1 {
+    font-size: clamp(48px, 7vw, 96px);
     font-weight: 300;
-    line-height: var(--lh-display);
     letter-spacing: var(--ls-display);
+    line-height: var(--lh-display);
+    color: var(--paper);
     margin-top: var(--space-s);
-    color: var(--ink);
   }
 
-  .contact-page__intro {
+  .contact__lead {
     margin-top: var(--space-m);
     font-size: var(--t-body-l);
-    color: var(--slate);
-    max-width: 52ch;
+    color: color-mix(in srgb, var(--paper) 70%, transparent);
     line-height: var(--lh-body);
+    max-width: 52ch;
+    margin-inline: auto;
   }
 
-  .contact-page__grid {
+  .contact__card {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-2xl);
-    padding-block: var(--space-xl);
-    border-top: 1px solid var(--bone);
-    border-bottom: 1px solid var(--bone);
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    padding: var(--space-l) 0;
+    border-top: 1px solid color-mix(in srgb, var(--paper) 18%, transparent);
+    border-bottom: 1px solid color-mix(in srgb, var(--paper) 18%, transparent);
   }
 
-  .contact-page__direct,
-  .contact-page__studio {
+  .contact__col {
+    padding: var(--space-s) var(--space-l);
     display: flex;
     flex-direction: column;
     gap: var(--space-xs);
+    border-left: 1px solid color-mix(in srgb, var(--paper) 12%, transparent);
   }
 
-  .contact-page__name {
-    font-size: var(--t-body-l);
-    color: var(--ink);
-    margin-top: var(--space-s);
+  .contact__col:first-child {
+    border-left: 0;
+    padding-left: 0;
   }
 
-  .contact-page__role {
-    font-size: var(--t-body-s);
-    color: var(--slate);
-    margin-bottom: var(--space-l);
+  .contact__col:last-child {
+    padding-right: 0;
   }
 
-  .contact-page__phone {
-    font-size: var(--t-display-m);
-    font-weight: 300;
-    letter-spacing: var(--ls-display);
-    line-height: 1.05;
-    color: var(--ink);
+  .contact__col .eyebrow {
+    color: color-mix(in srgb, var(--paper) 60%, transparent);
     margin-bottom: var(--space-s);
   }
 
-  .contact-page__phone:hover,
-  .contact-page__email:hover,
-  .contact-page__social-list a:hover {
+  .contact__name {
+    font-size: var(--t-body-l);
+    color: var(--paper);
+  }
+
+  .contact__role {
+    font-size: var(--t-body-s);
+    color: color-mix(in srgb, var(--paper) 60%, transparent);
+    margin-bottom: var(--space-m);
+  }
+
+  .contact__phone {
+    font-size: clamp(28px, 3.2vw, 44px);
+    font-weight: 300;
+    letter-spacing: var(--ls-display);
+    line-height: 1.05;
+    color: var(--paper);
+    margin-bottom: var(--space-s);
+  }
+
+  .contact__phone:hover,
+  .contact__email:hover,
+  .contact__social a:hover {
     color: var(--accent);
   }
 
-  .contact-page__email {
-    font-size: var(--t-body-l);
-    color: var(--ink);
-    align-self: flex-start;
-    border-bottom: 1px solid var(--bone);
+  .contact__email {
+    font-size: var(--t-body-m);
+    color: var(--paper);
+    border-bottom: 1px solid color-mix(in srgb, var(--paper) 25%, transparent);
     padding-bottom: 2px;
+    align-self: flex-start;
   }
 
-  .contact-page__address {
+  .contact__address {
     font-style: normal;
     font-size: var(--t-body-l);
-    color: var(--ink);
     line-height: var(--lh-body);
-    margin-top: var(--space-s);
+    color: var(--paper);
   }
 
-  .contact-page__hours {
-    margin-top: var(--space-l);
+  .contact__hours {
+    margin-top: var(--space-m);
     font-size: var(--t-body-m);
-    color: var(--slate);
+    color: color-mix(in srgb, var(--paper) 65%, transparent);
     line-height: var(--lh-body);
   }
 
-  .contact-page__social {
-    margin-top: var(--space-xl);
-  }
-
-  .contact-page__social-list {
+  .contact__social {
     list-style: none;
-    margin: var(--space-m) 0 0;
+    margin: 0;
     padding: 0;
     display: flex;
     flex-direction: column;
-    gap: var(--space-s);
+    gap: var(--space-m);
   }
 
-  .contact-page__social-list a {
+  .contact__social li {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .contact__social a {
     font-size: var(--t-body-l);
-    color: var(--ink);
+    color: var(--paper);
+    font-weight: 400;
   }
 
-  @media (max-width: 768px) {
-    .contact-page__grid {
+  .contact__handle {
+    font-size: var(--t-body-s);
+    color: color-mix(in srgb, var(--paper) 55%, transparent);
+  }
+
+  @media (max-width: 900px) {
+    .contact__card {
       grid-template-columns: 1fr;
-      gap: var(--space-xl);
+      gap: 0;
+    }
+    .contact__col {
+      border-left: 0;
+      border-top: 1px solid color-mix(in srgb, var(--paper) 12%, transparent);
+      padding: var(--space-l) 0;
+    }
+    .contact__col:first-child {
+      border-top: 0;
+      padding-top: var(--space-s);
+    }
+    .contact__col:last-child {
+      padding-bottom: var(--space-s);
     }
   }
 </style>

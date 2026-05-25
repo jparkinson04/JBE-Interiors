@@ -9,9 +9,12 @@ designer: "Red Deer Associates"
 programme: "8 weeks"
 budget: "£500k"
 features: []
-hero_image: "/images/hero/parsons.jpg"
+hero_image: "/images/projects/parsons/hero.jpg"
 description: |
   Parsons is the oyster restaurant from the team behind 10 Cases winery.
   Red Deer Associates led the interior design; JBE delivered the full
   fit-out across an eight-week programme to a £500k build cost.
+gallery:
+  - image: "/images/projects/parsons/gallery-1.jpg"
+  - image: "/images/projects/parsons/gallery-2.jpg"
 ---
