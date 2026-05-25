@@ -10,20 +10,19 @@ import UKMap from './UKMap.astro';
 
       <div class="about-map__body">
         <p>
-          JBE Interiors delivers complete fit-out programmes for restaurant and
-          retail brands across the UK, Ireland, and Jersey. We work directly
-          with national chains, hospitality groups, and independent operators.
+          JBE Interiors delivers complete fit-out programmes for restaurant
+          and retail brands across the UK, Ireland, and Jersey. We work
+          directly with national chains, hospitality groups, and independent
+          operators.
         </p>
         <p>
           Our scope covers everything from initial site survey through to
-          handover &mdash; programme management, principal contracting,
-          joinery, M&amp;E coordination, finishes, FF&amp;E install, and
-          snagging. Most projects run between four and twelve weeks on site.
+          handover: programme management, principal contracting, joinery,
+          M&amp;E coordination, finishes, FF&amp;E install, and snagging.
         </p>
         <p>
           We&rsquo;ve delivered sites for Wagamama, Nando&rsquo;s, and
-          independent operators including Parsons and Zelmans. Repeat work
-          makes up the majority of our pipeline.
+          independent operators including Parsons and Zelmans.
         </p>
       </div>
 
@@ -52,7 +51,9 @@ import UKMap from './UKMap.astro';
 <style>
   .about-map {
     background: var(--paper);
-    padding-block: var(--space-2xl);
+    /* Tighter bottom padding so the section doesn't double up with the
+       Instagram feed's own top padding directly below. */
+    padding-block: var(--space-xl) var(--space-m);
   }
 
   .about-map__inner {
@@ -62,13 +63,20 @@ import UKMap from './UKMap.astro';
     display: grid;
     grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
     gap: var(--space-2xl);
-    align-items: start;
+    /* Stretch both columns to the section's natural height (set by the
+       taller map), so the stats anchor to the bottom and we don't leave
+       a tall empty strip beneath the copy. */
+    align-items: stretch;
   }
 
   .about-map__copy {
     display: flex;
     flex-direction: column;
-    gap: var(--space-m);
+    /* Push the stats block to the bottom of the column so it aligns with
+       the foot of the map. The gap between description and stats absorbs
+       the difference in column heights. */
+    justify-content: space-between;
+    gap: var(--space-l);
   }
 
   .about-map__heading {
@@ -96,7 +104,7 @@ import UKMap from './UKMap.astro';
   }
 
   .about-map__stats {
-    margin: var(--space-l) 0 0;
+    margin: 0;
     padding-top: var(--space-l);
     border-top: 1px solid var(--bone);
     display: grid;
@@ -126,6 +134,10 @@ import UKMap from './UKMap.astro';
     .about-map__inner {
       grid-template-columns: 1fr;
       gap: var(--space-xl);
+      align-items: start;
+    }
+    .about-map__copy {
+      justify-content: flex-start;
     }
     .about-map__map {
       justify-content: center;
