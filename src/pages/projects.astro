@@ -1,20 +1,96 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectSection from '../components/ProjectSection.astro';
+
+const projects = (await getCollection('projects')).sort(
+  (a, b) => a.data.order - b.data.order
+);
 ---
 
 <BaseLayout title="Projects — JBE Interiors">
-  <section class="placeholder container">
-    <p class="eyebrow">Work</p>
-    <h1>Projects</h1>
+  <section class="projects-page__intro">
+    <div class="projects-page__intro-inner">
+      <p class="eyebrow">Work</p>
+      <h1>Selected projects.</h1>
+      <p class="projects-page__lead">
+        A curated selection of recent restaurant and retail fit-outs. Built
+        nationwide for national chains, hospitality groups, and independent
+        operators.
+      </p>
+    </div>
+  </section>
+
+  <section class="projects-page__list" aria-label="Projects list">
+    {projects.map((project, i) => (
+      <ProjectSection project={project} index={i} />
+    ))}
+  </section>
+
+  <section class="projects-page__more">
+    <div class="projects-page__more-inner">
+      <p class="eyebrow">More</p>
+      <p class="projects-page__more-text">
+        Selected projects shown. The full portfolio is available on request.
+      </p>
+      <a href="/contact" class="btn btn--secondary">Get in touch</a>
+    </div>
   </section>
 </BaseLayout>
 
 <style>
-  .placeholder {
-    padding-block: var(--space-2xl);
+  .projects-page__intro {
+    background: var(--paper);
+    padding-block: var(--space-xl) var(--space-l);
   }
-  .placeholder h1 {
+
+  .projects-page__intro-inner {
+    max-width: var(--grid-max);
+    margin-inline: auto;
+    padding-inline: var(--grid-margin);
+    max-width: 980px;
+  }
+
+  .projects-page__intro h1 {
     font-size: var(--t-display-l);
+    font-weight: 300;
+    letter-spacing: var(--ls-display);
+    line-height: var(--lh-display);
+    color: var(--ink);
     margin-top: var(--space-s);
+  }
+
+  .projects-page__lead {
+    margin-top: var(--space-m);
+    font-size: var(--t-body-l);
+    color: var(--slate);
+    max-width: 56ch;
+    line-height: var(--lh-body);
+  }
+
+  .projects-page__list {
+    padding-top: var(--space-xl);
+  }
+
+  .projects-page__more {
+    background: var(--paper);
+    padding-block: var(--space-2xl);
+    border-top: 1px solid var(--bone);
+  }
+
+  .projects-page__more-inner {
+    max-width: var(--grid-max);
+    margin-inline: auto;
+    padding-inline: var(--grid-margin);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-m);
+  }
+
+  .projects-page__more-text {
+    font-size: var(--t-body-l);
+    color: var(--ink);
+    max-width: 52ch;
   }
 </style>

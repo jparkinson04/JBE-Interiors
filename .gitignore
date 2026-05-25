@@ -29,3 +29,8 @@ pnpm-debug.log*
 /*.jpg
 /*.jpeg
 /*.png
+
+# Saved-page reference material dropped at the project root
+# (kept locally for content extraction; not for shipping)
+/*.html
+/*_files/

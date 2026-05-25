@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import ContactForm from '../components/ContactForm.astro';
 ---
 
 <BaseLayout title="Contact — JBE Interiors">
@@ -8,46 +7,56 @@ import ContactForm from '../components/ContactForm.astro';
     <div class="contact-page__container">
       <header class="contact-page__heading">
         <p class="eyebrow">Contact</p>
-        <h1>Let's talk.</h1>
+        <h1>Let&rsquo;s talk.</h1>
         <p class="contact-page__intro">
           For new project enquiries, questions, or to discuss a brief &mdash;
-          tell us a little about the project and we&rsquo;ll be in touch within
-          one working day.
+          get in touch directly. We respond within one working day.
         </p>
       </header>
 
       <div class="contact-page__grid">
-        <div class="contact-page__form-wrap">
-          <ContactForm />
-        </div>
+        <article class="contact-page__direct">
+          <p class="eyebrow">Direct</p>
+          <p class="contact-page__name">Jason Beedle</p>
+          <p class="contact-page__role">Managing Director</p>
+          <a href="tel:+441302322202" class="contact-page__phone" aria-label="Call 01302 322 202">
+            01302&nbsp;322&nbsp;202
+          </a>
+          <a href="mailto:jason@jbeinteriors.com" class="contact-page__email">
+            jason@jbeinteriors.com
+          </a>
+        </article>
 
-        <aside class="contact-page__aside">
-          <div class="contact-page__direct">
-            <p class="eyebrow">Direct</p>
-            <p class="contact-page__name">Jason Beedle</p>
-            <p class="contact-page__role">Managing Director</p>
-            <a href="tel:+441302322202" class="contact-page__phone">01302&nbsp;322&nbsp;202</a>
-            <a href="mailto:jason@jbeinteriors.com" class="contact-page__email">
-              jason@jbeinteriors.com
-            </a>
-          </div>
-
-          <div class="contact-page__studio">
-            <p class="eyebrow">Studio</p>
-            <address>
-              JBE Interiors Ltd<br />
-              305 Churchway<br />
-              Doncaster<br />
-              DN1 2TB
-            </address>
-          </div>
-
-          <div class="contact-page__hours">
-            <p class="eyebrow">Hours</p>
-            <p>Mon&ndash;Fri, 8:30am&ndash;6pm.<br />Site visits by appointment.</p>
-          </div>
-        </aside>
+        <article class="contact-page__studio">
+          <p class="eyebrow">Studio</p>
+          <address class="contact-page__address">
+            JBE Interiors Ltd<br />
+            305 Churchway<br />
+            Doncaster<br />
+            DN1&nbsp;2TB
+          </address>
+          <p class="contact-page__hours">
+            Mon&ndash;Fri, 8:30am&ndash;6pm.<br />
+            Site visits by appointment.
+          </p>
+        </article>
       </div>
+
+      <footer class="contact-page__social">
+        <p class="eyebrow">Follow</p>
+        <ul class="contact-page__social-list" role="list">
+          <li>
+            <a href="https://www.instagram.com/jbeinteriorsltd/" target="_blank" rel="noopener noreferrer">
+              Instagram&nbsp;&mdash;&nbsp;@jbeinteriorsltd&nbsp;&rarr;
+            </a>
+          </li>
+          <li>
+            <a href="https://www.linkedin.com/company/jbe-interiors/" target="_blank" rel="noopener noreferrer">
+              LinkedIn&nbsp;&mdash;&nbsp;JBE Interiors&nbsp;&rarr;
+            </a>
+          </li>
+        </ul>
+      </footer>
     </div>
   </section>
 </BaseLayout>
@@ -65,8 +74,8 @@ import ContactForm from '../components/ContactForm.astro';
   }
 
   .contact-page__heading {
-    max-width: 720px;
-    margin-bottom: var(--space-xl);
+    max-width: 880px;
+    margin-bottom: var(--space-2xl);
   }
 
   .contact-page__heading h1 {
@@ -82,29 +91,21 @@ import ContactForm from '../components/ContactForm.astro';
     margin-top: var(--space-m);
     font-size: var(--t-body-l);
     color: var(--slate);
-    max-width: 56ch;
+    max-width: 52ch;
     line-height: var(--lh-body);
   }
 
   .contact-page__grid {
     display: grid;
-    grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+    grid-template-columns: 1fr 1fr;
     gap: var(--space-2xl);
-    align-items: start;
+    padding-block: var(--space-xl);
+    border-top: 1px solid var(--bone);
+    border-bottom: 1px solid var(--bone);
   }
 
-  .contact-page__form-wrap {
-    min-width: 0;
-  }
-
-  .contact-page__aside {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-l);
-    padding-top: var(--space-s);
-  }
-
-  .contact-page__aside > div {
+  .contact-page__direct,
+  .contact-page__studio {
     display: flex;
     flex-direction: column;
     gap: var(--space-xs);
@@ -113,56 +114,75 @@ import ContactForm from '../components/ContactForm.astro';
   .contact-page__name {
     font-size: var(--t-body-l);
     color: var(--ink);
-    margin-top: var(--space-xs);
+    margin-top: var(--space-s);
   }
 
   .contact-page__role {
     font-size: var(--t-body-s);
     color: var(--slate);
+    margin-bottom: var(--space-l);
   }
 
   .contact-page__phone {
     font-size: var(--t-display-m);
     font-weight: 300;
     letter-spacing: var(--ls-display);
+    line-height: 1.05;
     color: var(--ink);
-    margin-top: var(--space-s);
-    line-height: 1.1;
+    margin-bottom: var(--space-s);
   }
 
   .contact-page__phone:hover,
-  .contact-page__email:hover {
+  .contact-page__email:hover,
+  .contact-page__social-list a:hover {
     color: var(--accent);
   }
 
   .contact-page__email {
     font-size: var(--t-body-l);
     color: var(--ink);
+    align-self: flex-start;
     border-bottom: 1px solid var(--bone);
     padding-bottom: 2px;
-    align-self: flex-start;
   }
 
-  .contact-page__studio address {
+  .contact-page__address {
     font-style: normal;
     font-size: var(--t-body-l);
     color: var(--ink);
     line-height: var(--lh-body);
+    margin-top: var(--space-s);
   }
 
-  .contact-page__hours p {
+  .contact-page__hours {
+    margin-top: var(--space-l);
     font-size: var(--t-body-m);
     color: var(--slate);
     line-height: var(--lh-body);
   }
 
-  @media (max-width: 960px) {
+  .contact-page__social {
+    margin-top: var(--space-xl);
+  }
+
+  .contact-page__social-list {
+    list-style: none;
+    margin: var(--space-m) 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+  }
+
+  .contact-page__social-list a {
+    font-size: var(--t-body-l);
+    color: var(--ink);
+  }
+
+  @media (max-width: 768px) {
     .contact-page__grid {
       grid-template-columns: 1fr;
-      gap: var(--space-2xl);
-    }
-    .contact-page__aside {
-      padding-top: 0;
+      gap: var(--space-xl);
     }
   }
 </style>

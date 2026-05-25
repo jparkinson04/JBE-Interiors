@@ -9,10 +9,15 @@ const projects = defineCollection({
     name: z.string(),
     client: z.string(),
     location: z.string(),
-    year: z.number(),
-    scope: z.string(),
+    year: z.number().optional(),
+    scope: z.string().optional(),
+    designer: z.string().optional(),
+    budget: z.string().optional(),
+    programme: z.string().optional(),
+    features: z.array(z.string()).default([]),
     hero_image: z.string(),
     description: z.string(),
+    order: z.number().default(100),
     gallery: z
       .array(
         z.object({
