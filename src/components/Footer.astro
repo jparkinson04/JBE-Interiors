@@ -6,7 +6,13 @@ const year = new Date().getFullYear();
   <div class="site-footer__inner">
     <div class="site-footer__top">
       <a href="/" class="site-footer__logo" aria-label="JBE Interiors — home">
-        <span class="wordmark wordmark--large">JBE Interiors</span>
+        <img
+          src="/assets/jbe-logo-light.png"
+          alt="JBE Interiors"
+          width="216"
+          height="140"
+          class="site-footer__logo-img"
+        />
       </a>
 
       <address class="site-footer__contact">
@@ -31,7 +37,6 @@ const year = new Date().getFullYear();
 
     <div class="site-footer__meta">
       <span>&copy; JBE Interiors Ltd {year}</span>
-      <span>Site by Seam</span>
     </div>
   </div>
 </footer>
@@ -60,11 +65,10 @@ const year = new Date().getFullYear();
     color: var(--paper);
   }
 
-  .wordmark--large {
-    font-size: 40px;
-    font-weight: 300;
-    letter-spacing: -0.02em;
-    line-height: 1;
+  .site-footer__logo-img {
+    height: 64px;
+    width: auto;
+    display: block;
   }
 
   .site-footer__contact {
@@ -107,8 +111,6 @@ const year = new Date().getFullYear();
   }
 
   .site-footer__meta {
-    display: flex;
-    justify-content: space-between;
     font-size: var(--t-body-s);
     color: color-mix(in srgb, var(--paper) 70%, transparent);
   }
@@ -122,8 +124,8 @@ const year = new Date().getFullYear();
       align-items: flex-start;
       text-align: left;
     }
-    .wordmark--large {
-      font-size: 32px;
+    .site-footer__logo-img {
+      height: 56px;
     }
     .site-footer__meta {
       flex-direction: column;

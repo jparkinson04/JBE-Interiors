@@ -7,7 +7,13 @@ const isContact = pathname === '/contact' || pathname.startsWith('/contact/');
 <header class="site-header">
   <div class="site-header__inner">
     <a href="/" class="site-header__logo" aria-label="JBE Interiors — home">
-      <span class="wordmark">JBE Interiors</span>
+      <img
+        src="/assets/jbe-logo-dark.png"
+        alt="JBE Interiors"
+        width="216"
+        height="140"
+        class="site-header__logo-img"
+      />
     </a>
 
     <nav class="site-header__nav" aria-label="Primary">
@@ -44,13 +50,12 @@ const isContact = pathname === '/contact' || pathname.startsWith('/contact/');
     color: var(--ink);
   }
 
-  /* Placeholder wordmark — text fallback until a clean Interiors-only
-     vector mark is supplied. Heights match the design system (32 / 28). */
-  .wordmark {
-    font-size: 22px;
-    font-weight: 300;
-    letter-spacing: -0.01em;
-    line-height: 1;
+  /* Small Interiors logo in top-left. Spec sets header logo height at
+     32px desktop / 28px mobile; width auto-scales. */
+  .site-header__logo-img {
+    height: 32px;
+    width: auto;
+    display: block;
   }
 
   .site-header__nav {
@@ -80,8 +85,8 @@ const isContact = pathname === '/contact' || pathname.startsWith('/contact/');
   }
 
   @media (max-width: 640px) {
-    .wordmark {
-      font-size: 18px;
+    .site-header__logo-img {
+      height: 28px;
     }
     .site-header__nav {
       gap: var(--space-s);

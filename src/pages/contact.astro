@@ -1,20 +1,168 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ContactForm from '../components/ContactForm.astro';
 ---
 
 <BaseLayout title="Contact — JBE Interiors">
-  <section class="placeholder container">
-    <p class="eyebrow">Contact</p>
-    <h1>Contact</h1>
+  <section class="contact-page">
+    <div class="contact-page__container">
+      <header class="contact-page__heading">
+        <p class="eyebrow">Contact</p>
+        <h1>Let's talk.</h1>
+        <p class="contact-page__intro">
+          For new project enquiries, questions, or to discuss a brief &mdash;
+          tell us a little about the project and we&rsquo;ll be in touch within
+          one working day.
+        </p>
+      </header>
+
+      <div class="contact-page__grid">
+        <div class="contact-page__form-wrap">
+          <ContactForm />
+        </div>
+
+        <aside class="contact-page__aside">
+          <div class="contact-page__direct">
+            <p class="eyebrow">Direct</p>
+            <p class="contact-page__name">Jason Beedle</p>
+            <p class="contact-page__role">Managing Director</p>
+            <a href="tel:+441302322202" class="contact-page__phone">01302&nbsp;322&nbsp;202</a>
+            <a href="mailto:jason@jbeinteriors.com" class="contact-page__email">
+              jason@jbeinteriors.com
+            </a>
+          </div>
+
+          <div class="contact-page__studio">
+            <p class="eyebrow">Studio</p>
+            <address>
+              JBE Interiors Ltd<br />
+              305 Churchway<br />
+              Doncaster<br />
+              DN1 2TB
+            </address>
+          </div>
+
+          <div class="contact-page__hours">
+            <p class="eyebrow">Hours</p>
+            <p>Mon&ndash;Fri, 8:30am&ndash;6pm.<br />Site visits by appointment.</p>
+          </div>
+        </aside>
+      </div>
+    </div>
   </section>
 </BaseLayout>
 
 <style>
-  .placeholder {
-    padding-block: var(--space-2xl);
+  .contact-page {
+    background: var(--paper);
+    padding-block: var(--space-xl) var(--space-2xl);
   }
-  .placeholder h1 {
+
+  .contact-page__container {
+    max-width: var(--grid-max);
+    margin-inline: auto;
+    padding-inline: var(--grid-margin);
+  }
+
+  .contact-page__heading {
+    max-width: 720px;
+    margin-bottom: var(--space-xl);
+  }
+
+  .contact-page__heading h1 {
     font-size: var(--t-display-l);
+    font-weight: 300;
+    line-height: var(--lh-display);
+    letter-spacing: var(--ls-display);
     margin-top: var(--space-s);
+    color: var(--ink);
+  }
+
+  .contact-page__intro {
+    margin-top: var(--space-m);
+    font-size: var(--t-body-l);
+    color: var(--slate);
+    max-width: 56ch;
+    line-height: var(--lh-body);
+  }
+
+  .contact-page__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+    gap: var(--space-2xl);
+    align-items: start;
+  }
+
+  .contact-page__form-wrap {
+    min-width: 0;
+  }
+
+  .contact-page__aside {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-l);
+    padding-top: var(--space-s);
+  }
+
+  .contact-page__aside > div {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .contact-page__name {
+    font-size: var(--t-body-l);
+    color: var(--ink);
+    margin-top: var(--space-xs);
+  }
+
+  .contact-page__role {
+    font-size: var(--t-body-s);
+    color: var(--slate);
+  }
+
+  .contact-page__phone {
+    font-size: var(--t-display-m);
+    font-weight: 300;
+    letter-spacing: var(--ls-display);
+    color: var(--ink);
+    margin-top: var(--space-s);
+    line-height: 1.1;
+  }
+
+  .contact-page__phone:hover,
+  .contact-page__email:hover {
+    color: var(--accent);
+  }
+
+  .contact-page__email {
+    font-size: var(--t-body-l);
+    color: var(--ink);
+    border-bottom: 1px solid var(--bone);
+    padding-bottom: 2px;
+    align-self: flex-start;
+  }
+
+  .contact-page__studio address {
+    font-style: normal;
+    font-size: var(--t-body-l);
+    color: var(--ink);
+    line-height: var(--lh-body);
+  }
+
+  .contact-page__hours p {
+    font-size: var(--t-body-m);
+    color: var(--slate);
+    line-height: var(--lh-body);
+  }
+
+  @media (max-width: 960px) {
+    .contact-page__grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-2xl);
+    }
+    .contact-page__aside {
+      padding-top: 0;
+    }
   }
 </style>
