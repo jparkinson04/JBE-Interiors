@@ -1,0 +1,138 @@
+---
+import UKMap from './UKMap.astro';
+---
+
+<section class="about-map" aria-label="About JBE Interiors">
+  <div class="about-map__inner">
+    <div class="about-map__copy">
+      <p class="eyebrow">01 / About</p>
+      <h2 class="about-map__heading">Restaurant and retail fit&#8209;outs, from concept to handover.</h2>
+
+      <div class="about-map__body">
+        <p>
+          JBE Interiors delivers complete fit-out programmes for restaurant and
+          retail brands across the UK, Ireland, and Jersey. We work directly
+          with national chains, hospitality groups, and independent operators.
+        </p>
+        <p>
+          Our scope covers everything from initial site survey through to
+          handover &mdash; programme management, principal contracting,
+          joinery, M&amp;E coordination, finishes, FF&amp;E install, and
+          snagging. Most projects run between four and twelve weeks on site.
+        </p>
+        <p>
+          We&rsquo;ve delivered sites for Wagamama, Nando&rsquo;s, and
+          independent operators including Parsons and Zelmans. Repeat work
+          makes up the majority of our pipeline.
+        </p>
+      </div>
+
+      <dl class="about-map__stats">
+        <div>
+          <dt class="eyebrow">Operating since</dt>
+          <dd>1998</dd>
+        </div>
+        <div>
+          <dt class="eyebrow">Based</dt>
+          <dd>Doncaster</dd>
+        </div>
+        <div>
+          <dt class="eyebrow">Coverage</dt>
+          <dd>UK, Ireland, Jersey</dd>
+        </div>
+      </dl>
+    </div>
+
+    <div class="about-map__map">
+      <UKMap />
+    </div>
+  </div>
+</section>
+
+<style>
+  .about-map {
+    background: var(--paper);
+    padding-block: var(--space-2xl);
+  }
+
+  .about-map__inner {
+    max-width: var(--grid-max);
+    margin-inline: auto;
+    padding-inline: var(--grid-margin);
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    gap: var(--space-2xl);
+    align-items: start;
+  }
+
+  .about-map__copy {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-m);
+  }
+
+  .about-map__heading {
+    font-size: var(--t-display-m);
+    font-weight: 300;
+    letter-spacing: var(--ls-display);
+    line-height: var(--lh-display);
+    color: var(--ink);
+    margin-top: var(--space-s);
+    max-width: 18ch;
+  }
+
+  .about-map__body {
+    margin-top: var(--space-s);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-m);
+  }
+
+  .about-map__body p {
+    font-size: var(--t-body-m);
+    color: var(--ink);
+    line-height: var(--lh-body);
+    max-width: 56ch;
+  }
+
+  .about-map__stats {
+    margin: var(--space-l) 0 0;
+    padding-top: var(--space-l);
+    border-top: 1px solid var(--bone);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-m);
+  }
+
+  .about-map__stats > div {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .about-map__stats dd {
+    margin: 0;
+    font-size: var(--t-body-m);
+    color: var(--ink);
+  }
+
+  .about-map__map {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+  }
+
+  @media (max-width: 900px) {
+    .about-map__inner {
+      grid-template-columns: 1fr;
+      gap: var(--space-xl);
+    }
+    .about-map__map {
+      justify-content: center;
+    }
+    .about-map__stats {
+      grid-template-columns: 1fr;
+      gap: var(--space-m);
+    }
+  }
+</style>

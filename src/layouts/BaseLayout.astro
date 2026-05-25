@@ -53,11 +53,13 @@ const { title, description = 'JBE Interiors — restaurant and retail fit-outs a
 
       if (!prefersReduced) {
         const lenis = new Lenis({
-          duration: 1.4,
-          easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+          /* lerp = framewise interpolation toward the target scroll position.
+             Higher = snappier response; lower = longer glide. 0.12 feels
+             responsive while still gliding through inertia. */
+          lerp: 0.12,
           smoothWheel: true,
-          wheelMultiplier: 0.9,
-          touchMultiplier: 1.6,
+          wheelMultiplier: 1.1,
+          touchMultiplier: 1.8,
         });
 
         const raf = (time: number) => {
