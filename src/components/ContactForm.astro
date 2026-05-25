@@ -71,7 +71,11 @@ const isConfigured = Boolean(endpoint);
     </div>
   </div>
 
-  <!-- Honeypot — ignore submissions where this is filled. -->
+  <!-- Subject line for the email Jason receives. -->
+  <input type="hidden" name="_subject" value="New enquiry — jbeinteriors.com" />
+
+  <!-- Honeypot — Formspree and similar services drop submissions
+       where this hidden field is filled in. -->
   <div class="contact-form__honeypot" aria-hidden="true">
     <label for="cf-website">Website</label>
     <input id="cf-website" name="_gotcha" type="text" tabindex="-1" autocomplete="off" />
