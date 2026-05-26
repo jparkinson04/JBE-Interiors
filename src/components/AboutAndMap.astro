@@ -55,7 +55,9 @@ import UKMap from './UKMap.astro';
 <style>
   .about-map {
     background: var(--paper);
-    padding-block: var(--space-xl) var(--space-m);
+    /* Section top padding intentionally tight — the meta strip should
+       sit close to the hero rather than floating in space. */
+    padding-block: var(--space-l) var(--space-m);
   }
 
   .about-map__inner {
@@ -64,11 +66,12 @@ import UKMap from './UKMap.astro';
     padding-inline: var(--grid-margin);
   }
 
-  /* Masthead-style meta strip at the top of the section. Eyebrow labels
-     above each value, separated by thin column dividers. */
+  /* Masthead-style meta strip at the top of the section. Reads like a
+     publication's standfirst credits: tight uppercase eyebrow above a
+     larger serif value, separated by thin column dividers. */
   .about-map__meta {
-    margin: 0 0 var(--space-xl);
-    padding: var(--space-m) 0;
+    margin: 0 0 var(--space-l);
+    padding: var(--space-s) 0;
     border-top: 1px solid var(--bone);
     border-bottom: 1px solid var(--bone);
     display: grid;
@@ -80,7 +83,7 @@ import UKMap from './UKMap.astro';
     padding-inline: var(--space-l);
     display: flex;
     flex-direction: column;
-    gap: var(--space-xs);
+    gap: 4px;
     border-left: 1px solid var(--bone);
   }
 
@@ -99,14 +102,18 @@ import UKMap from './UKMap.astro';
 
   .about-map__meta dd {
     margin: 0;
-    font-size: var(--t-body-m);
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: clamp(20px, 1.6vw, 26px);
+    letter-spacing: -0.01em;
+    line-height: 1.05;
     color: var(--ink);
   }
 
   .about-map__grid {
     display: grid;
     grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
-    gap: var(--space-2xl);
+    gap: var(--space-xl);
     align-items: center;
   }
 
