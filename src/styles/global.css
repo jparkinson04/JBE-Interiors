@@ -62,6 +62,12 @@
   /* Typeface stack — Söhne (paid, not loaded yet), Geist as the chosen free
      fallback, then a system safety net. Swap to Söhne when licensed. */
   --font-sans: 'Söhne', 'Geist', 'Neue Haas Grotesk', 'Helvetica Neue', system-ui, sans-serif;
+
+  /* Display serif — Cormorant Garamond at hairline weights for the
+     editorial-magazine feel. Used for h1/h2 and a few display-sized
+     accents (large phone number, etc). Body and UI stay on the sans
+     stack so the site doesn't drift into florid territory. */
+  --font-serif: 'Cormorant Garamond', 'EB Garamond', 'Times New Roman', Times, serif;
 }
 
 @media (max-width: 1024px) {
@@ -147,12 +153,23 @@ button {
   color: inherit;
 }
 
-/* Typography defaults */
+/* Typography defaults — display headings set in the editorial serif.
+   h2-h6 use weight 400 (more presence at section-level sizes); h1 and
+   any explicit display-l/xl elements drop to hairline 300 for the
+   editorial-magazine feel at large sizes. */
 h1, h2, h3, h4, h5, h6 {
   margin: 0;
-  font-weight: 300;
+  font-family: var(--font-serif);
+  font-weight: 400;
   line-height: var(--lh-display);
   letter-spacing: var(--ls-display);
+  font-feature-settings: 'kern' 1, 'liga' 1;
+  text-wrap: balance;
+}
+
+h1, .display-l, .display-xl {
+  font-weight: 300;
+  letter-spacing: -0.025em;
 }
 
 p {
