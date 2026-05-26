@@ -109,13 +109,13 @@ const meta = [
 
 <style>
   .project-detail {
-    padding-bottom: var(--space-2xl);
+    padding-bottom: var(--space-xl);
   }
 
   .project-detail__hero {
     margin: 0;
-    aspect-ratio: 16 / 10;
-    max-height: 75vh;
+    aspect-ratio: 16 / 9;
+    max-height: 56vh;
     overflow: hidden;
   }
 
@@ -131,38 +131,38 @@ const meta = [
     max-width: var(--grid-max);
     margin-inline: auto;
     padding-inline: var(--grid-margin);
-    padding-top: var(--space-xl);
+    padding-top: var(--space-l);
   }
 
   .project-detail__header {
-    margin-bottom: var(--space-l);
+    margin-bottom: var(--space-m);
     max-width: 880px;
   }
 
   .project-detail__name {
     font-size: var(--t-display-l);
     font-weight: 300;
-    letter-spacing: var(--ls-display);
-    line-height: var(--lh-display);
+    letter-spacing: -0.025em;
+    line-height: 1;
     color: var(--ink);
-    margin-top: var(--space-s);
+    margin-top: var(--space-xs);
   }
 
   .project-detail__body {
     display: grid;
     grid-template-columns: minmax(0, 7fr) minmax(0, 3fr);
-    gap: var(--space-xl);
+    gap: var(--space-l);
     align-items: start;
   }
 
   .project-detail__description {
     display: flex;
     flex-direction: column;
-    gap: var(--space-m);
+    gap: var(--space-s);
   }
 
   .project-detail__description p {
-    font-size: var(--t-body-l);
+    font-size: var(--t-body-m);
     color: var(--ink);
     line-height: var(--lh-body);
     max-width: 62ch;
@@ -203,30 +203,30 @@ const meta = [
 
   .project-detail__meta {
     margin: 0;
-    padding: var(--space-m) 0 0;
+    padding: var(--space-s) 0 0;
     border-top: 1px solid var(--bone);
     display: flex;
     flex-direction: column;
-    gap: var(--space-m);
+    gap: var(--space-s);
   }
 
   .project-detail__meta-row {
     display: flex;
     flex-direction: column;
-    gap: var(--space-xs);
+    gap: 2px;
   }
 
   .project-detail__meta-row dd {
     margin: 0;
-    font-size: var(--t-body-m);
+    font-size: var(--t-body-s);
     color: var(--ink);
   }
 
   .project-detail__gallery {
-    margin-top: var(--space-xl);
+    margin-top: var(--space-l);
     display: flex;
     flex-direction: column;
-    gap: var(--space-l);
+    gap: var(--space-m);
   }
 
   .project-detail__gallery figure {
@@ -247,8 +247,8 @@ const meta = [
   }
 
   .project-detail__nav {
-    margin-top: var(--space-xl);
-    padding-top: var(--space-l);
+    margin-top: var(--space-l);
+    padding-top: var(--space-m);
     border-top: 1px solid var(--bone);
     display: grid;
     grid-template-columns: 1fr auto 1fr;
