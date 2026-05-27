@@ -141,11 +141,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   }
 
   /* All content centred inside the panel and held to a comfortable
-     reading column. Padding-inline tightened so the column reads as a
-     considered block, not a narrow strip. */
+     reading column wide enough for a 3-column meta row. */
   .contact__inner {
     width: 100%;
-    max-width: 440px;
+    max-width: 600px;
     padding-inline: var(--space-l);
     text-align: center;
     display: flex;
@@ -211,13 +210,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     border-top: 1px solid var(--bone);
   }
 
-  /* Vertical stack of three meta blocks — Direct, Studio, Follow —
-     each centred. Generous gap between blocks gives breathing room. */
+  /* Three meta blocks side-by-side — Direct, Studio, Follow — each
+     with its eyebrow label above stacked values, all centred within
+     its column. Generous column gap keeps each block breathable. */
   .contact__meta {
     margin: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: var(--space-m);
     width: 100%;
   }
@@ -275,8 +274,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       padding-block: var(--space-l);
     }
     .contact__inner {
-      max-width: 520px;
+      max-width: 640px;
       padding-inline: var(--grid-margin);
+    }
+  }
+
+  /* Below 560px the three meta columns get too narrow — drop to one. */
+  @media (max-width: 560px) {
+    .contact__meta {
+      grid-template-columns: 1fr;
+      gap: var(--space-m);
     }
   }
 </style>
