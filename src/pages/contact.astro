@@ -140,10 +140,25 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     padding-block: var(--space-l);
   }
 
+  /* All content centred inside the panel and held to a comfortable
+     reading column. Padding-inline tightened so the column reads as a
+     considered block, not a narrow strip. */
   .contact__inner {
     width: 100%;
-    max-width: 560px;
-    padding-inline: var(--space-xl);
+    max-width: 440px;
+    padding-inline: var(--space-l);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-l);
+  }
+
+  .contact__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-xs);
   }
 
   .contact__header .eyebrow {
@@ -156,16 +171,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     letter-spacing: -0.025em;
     line-height: 1;
     color: var(--ink);
-    margin-top: var(--space-xs);
   }
 
-  /* Primary CTA — phone is still the centerpiece, scaled to the panel. */
+  /* Phone + email centred and tight, sitting as the primary action. */
   .contact__primary {
-    margin-top: var(--space-m);
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    gap: var(--space-xs);
+    align-items: center;
+    gap: var(--space-s);
   }
 
   .contact__phone {
@@ -192,27 +205,28 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   }
 
   .contact__rule {
-    margin: var(--space-m) 0;
-    width: 100%;
+    margin: 0;
+    width: 64px;
     border: 0;
     border-top: 1px solid var(--bone);
   }
 
+  /* Vertical stack of three meta blocks — Direct, Studio, Follow —
+     each centred. Generous gap between blocks gives breathing room. */
   .contact__meta {
     margin: 0;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-m) var(--space-l);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-m);
+    width: 100%;
   }
 
   .contact__meta-col {
     display: flex;
     flex-direction: column;
-    gap: 4px;
-  }
-
-  .contact__meta-col:last-child {
-    grid-column: 1 / -1;
+    align-items: center;
+    gap: 2px;
   }
 
   .contact__meta dt {
@@ -227,13 +241,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   .contact__meta-primary {
     font-size: var(--t-body-m);
     color: var(--ink);
-    line-height: 1.4;
+    line-height: 1.5;
   }
 
   .contact__meta-secondary {
     font-size: var(--t-body-s);
     color: var(--slate);
-    line-height: 1.4;
+    line-height: 1.5;
   }
 
   .contact__social-link {
@@ -249,16 +263,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     color: inherit;
   }
 
-  /* Place Follow column inline with Studio on a wider panel */
-  @media (min-width: 1200px) {
-    .contact__meta {
-      grid-template-columns: repeat(3, 1fr);
-    }
-    .contact__meta-col:last-child {
-      grid-column: auto;
-    }
-  }
-
   @media (max-width: 960px) {
     .contact {
       grid-template-columns: 1fr;
@@ -271,20 +275,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       padding-block: var(--space-l);
     }
     .contact__inner {
-      max-width: 720px;
+      max-width: 520px;
       padding-inline: var(--grid-margin);
-    }
-    .contact__meta {
-      grid-template-columns: repeat(3, 1fr);
-    }
-    .contact__meta-col:last-child {
-      grid-column: auto;
-    }
-  }
-
-  @media (max-width: 640px) {
-    .contact__meta {
-      grid-template-columns: 1fr;
     }
   }
 </style>
