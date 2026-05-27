@@ -33,15 +33,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           </a>
         </div>
 
-        <hr class="contact__rule" />
-
         <dl class="contact__meta">
-          <div class="contact__meta-col">
-            <dt class="eyebrow">Direct</dt>
-            <dd class="contact__meta-primary">Jason Beedle</dd>
-            <dd class="contact__meta-secondary">Managing Director</dd>
-          </div>
-
           <div class="contact__meta-col">
             <dt class="eyebrow">Studio</dt>
             <dd class="contact__meta-primary">305 Churchway</dd>
@@ -203,21 +195,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     padding-bottom: 2px;
   }
 
-  .contact__rule {
-    margin: 0;
-    width: 64px;
-    border: 0;
-    border-top: 1px solid var(--bone);
-  }
-
-  /* Three meta blocks side-by-side — Direct, Studio, Follow — each
-     with its eyebrow label above stacked values, all centred within
-     its column. Generous column gap keeps each block breathable. */
+  /* Two meta blocks side-by-side — Studio and Follow — with generous
+     column gap so the two sit as a balanced pair. */
   .contact__meta {
     margin: 0;
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--space-m);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-xl);
     width: 100%;
   }
 
@@ -279,8 +263,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     }
   }
 
-  /* Below 560px the three meta columns get too narrow — drop to one. */
-  @media (max-width: 560px) {
+  /* Below 480px the two meta columns get too narrow — drop to one. */
+  @media (max-width: 480px) {
     .contact__meta {
       grid-template-columns: 1fr;
       gap: var(--space-m);
