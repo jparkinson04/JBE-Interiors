@@ -57,7 +57,11 @@ const totalSeconds = slides.length * cycleSeconds;
 <style define:vars={{ totalSeconds: `${totalSeconds}s` }}>
   .hero {
     position: relative;
+    /* svh uses the smallest viewport state (mobile address bar visible)
+       so the hero doesn't resize when the browser chrome retracts —
+       eliminates the visible reshape on refresh / scroll start. */
     height: 100vh;
+    height: 100svh;
     min-height: 600px;
     background: var(--ink);
     overflow: hidden;

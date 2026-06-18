@@ -225,20 +225,16 @@ p {
 
 /* Motion — only when the user hasn't requested reduced motion */
 @media (prefers-reduced-motion: no-preference) {
-  .page-enter {
-    animation: page-fade-in var(--motion-medium) var(--ease-out);
-  }
+  /* Page-enter fade was running a 200ms opacity 0->1 on <main> on every
+     page load. Reads as a "glitch" when the hero photo also paints
+     during that window. Removed; the hero crossfade and other animations
+     already carry the designed feel without it. */
 
   a, button, .btn {
     transition: color var(--motion-fast) ease,
                 background-color var(--motion-fast) ease,
                 border-color var(--motion-fast) ease,
                 opacity var(--motion-fast) ease;
-  }
-
-  @keyframes page-fade-in {
-    from { opacity: 0; }
-    to { opacity: 1; }
   }
 }
 
