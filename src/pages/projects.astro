@@ -238,8 +238,10 @@ function cardSlides(hero: string, gallery: { image: string }[]): string[] {
     transform: translateY(-50%);
     width: 40px;
     height: 40px;
-    background: rgba(247, 245, 240, 0.9);
-    backdrop-filter: blur(6px);
+    /* Solid paper background instead of a semi-transparent
+       backdrop-filter blur — much cheaper for the browser to paint on
+       scroll, especially with 8 buttons across the grid. */
+    background: var(--paper);
     color: var(--ink);
     border: 0;
     cursor: pointer;
