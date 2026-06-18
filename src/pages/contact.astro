@@ -6,7 +6,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <section class="contact">
     <figure class="contact__image" aria-hidden="true">
       <img
-        src="/images/projects/sunday-in-brooklyn/gallery-5.jpg"
+        src="/images/projects/sunday-in-brooklyn/gallery-9.jpg"
         alt=""
         loading="eager"
         fetchpriority="high"
@@ -87,7 +87,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   .contact {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    min-height: calc(100vh - var(--header-height));
+    /* Bounded section height: tall enough to feel like a destination,
+       not so tall the image becomes a billboard and leaves white space
+       around the right-hand info panel. */
+    min-height: clamp(560px, 70vh, 720px);
     background: var(--paper);
   }
 
