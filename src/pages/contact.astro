@@ -8,6 +8,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <img
         src="/images/projects/sunday-in-brooklyn/gallery-9.jpg"
         alt=""
+        width="1800"
+        height="1200"
         loading="eager"
         fetchpriority="high"
         decoding="async"
@@ -87,10 +89,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   .contact {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    /* Bounded section height: tall enough to feel like a destination,
-       not so tall the image becomes a billboard and leaves white space
-       around the right-hand info panel. */
+    /* svh locks the section to the smallest viewport state (mobile
+       address bar visible) so the image doesn't reshape when the
+       browser chrome retracts. */
     min-height: clamp(560px, 70vh, 720px);
+    min-height: clamp(560px, 70svh, 720px);
     background: var(--paper);
   }
 
