@@ -119,13 +119,7 @@ html.lenis, html.lenis body {
 }
 
 body {
-  /* Warm paper base with a pre-rendered noise tile. Switched from a
-     filter-driven SVG (recomputed per tile, hurts scroll perf) to a
-     small raster PNG the browser tiles for free. */
   background-color: var(--paper);
-  background-image: url('/assets/paper-grain.png');
-  background-size: 200px 200px;
-  background-repeat: repeat;
   color: var(--ink);
   font-family: var(--font-sans);
   font-size: var(--t-body-m);
