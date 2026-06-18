@@ -21,10 +21,12 @@ import UKMap from './UKMap.astro';
 
     <div class="about-map__grid">
       <div class="about-map__copy">
-        <p class="eyebrow">About</p>
-        <h2 class="about-map__heading">
-          Restaurant and retail fit&#8209;outs, from concept to handover.
-        </h2>
+        <header class="about-map__header">
+          <p class="eyebrow">About</p>
+          <h2 class="about-map__heading">
+            Restaurant and retail fit&#8209;outs, from concept to handover.
+          </h2>
+        </header>
 
         <div class="about-map__body">
           <p>
@@ -112,13 +114,20 @@ import UKMap from './UKMap.astro';
     gap: var(--space-l);
   }
 
+  /* Eyebrow + heading wrapper: tight 8px gap between the two so the
+     pair reads as one block. */
+  .about-map__header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
   .about-map__heading {
     font-size: var(--t-display-m);
     font-weight: 400;
     letter-spacing: -0.02em;
     line-height: 1.1;
     color: var(--ink);
-    margin-top: var(--space-s);
     max-width: 22ch;
   }
 
