@@ -47,6 +47,7 @@ const isPlaceholder = posts === placeholderPosts;
 <section class="ig-feed" aria-label="Latest from Instagram">
   <div class="ig-feed__container">
     <header class="ig-feed__header">
+      <span class="section-mark" aria-hidden="true"></span>
       <p class="eyebrow">On Instagram</p>
       <h2 class="ig-feed__heading">Latest from <span class="ig-feed__handle">@jbeinteriorsltd</span>.</h2>
     </header>
@@ -92,7 +93,9 @@ const isPlaceholder = posts === placeholderPosts;
 
 <style>
   .ig-feed {
-    background: var(--paper);
+    /* Warm stone tone differentiates this section from the paper
+       About + Map block above. Gives the page visual rhythm. */
+    background: var(--stone);
     padding-block: var(--space-l) var(--space-xl);
   }
 

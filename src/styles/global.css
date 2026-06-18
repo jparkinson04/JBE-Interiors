@@ -119,7 +119,14 @@ html.lenis, html.lenis body {
 }
 
 body {
-  background: var(--paper);
+  /* Warm paper base with a very subtle fractal-noise grain overlaid.
+     About 4–5% opacity; reads as material texture, not visible noise.
+     The grain shows on paper / stone / bone sections and is naturally
+     hidden under photography and dark sections. */
+  background-color: var(--paper);
+  background-image: url('/assets/paper-grain.svg');
+  background-size: 200px 200px;
+  background-repeat: repeat;
   color: var(--ink);
   font-family: var(--font-sans);
   font-size: var(--t-body-m);
@@ -183,6 +190,18 @@ p {
   letter-spacing: var(--ls-eyebrow);
   text-transform: uppercase;
   color: var(--slate);
+}
+
+/* Section mark — a thin terracotta hairline above the eyebrow on
+   major section headers. Editorial flourish that signals "designed",
+   not just laid out. Use sparingly — landing-page section openers
+   and any other primary section header. */
+.section-mark {
+  display: block;
+  width: 40px;
+  height: 1px;
+  background: var(--accent);
+  margin-bottom: var(--space-s);
 }
 
 /* Layout — container & grid */

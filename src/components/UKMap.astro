@@ -166,59 +166,34 @@ const VB_H = 500;
   vbW: `${VB_W}`,
   vbH: `${VB_H}`,
 }}>
-  /* Dark-framed map. Sits in its own ink panel so the country shapes
-     and terracotta pins read as a dramatic editorial cartograph rather
-     than a flat infographic. */
+  /* Map sits on the section's paper background — no dark frame,
+     no padding. Pins overlay the SVG 1:1 so hover hits correctly. */
   .ukmap {
     margin: 0;
     position: relative;
     width: 100%;
     max-width: 520px;
     aspect-ratio: var(--vbW) / var(--vbH);
-    background: var(--ink);
-    padding: var(--space-m);
-    box-shadow: 0 30px 60px -30px rgba(17, 17, 17, 0.45);
-  }
-
-  /* Subtle diagonal hairline overlay across the dark panel — picks up
-     the editorial texture without being noisy. */
-  .ukmap::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(
-        135deg,
-        transparent 0,
-        transparent 49%,
-        color-mix(in srgb, var(--paper) 4%, transparent) 49%,
-        color-mix(in srgb, var(--paper) 4%, transparent) 51%,
-        transparent 51%,
-        transparent 100%
-      );
-    background-size: 8px 8px;
-    pointer-events: none;
-    opacity: 0.5;
   }
 
   .ukmap__svg {
     width: 100%;
     height: 100%;
     display: block;
-    position: relative;
-    z-index: 1;
   }
 
+  /* Country shapes use a warm soft stone with a thin terracotta-tinted
+     stroke — alive, not flat grey. */
   .ukmap__land {
-    fill: color-mix(in srgb, var(--paper) 12%, var(--ink));
-    stroke: color-mix(in srgb, var(--paper) 28%, transparent);
+    fill: var(--stone);
+    stroke: color-mix(in srgb, var(--accent) 50%, var(--slate));
     stroke-width: 0.6;
     stroke-linejoin: round;
   }
 
   .ukmap__jersey circle {
-    fill: color-mix(in srgb, var(--paper) 12%, var(--ink));
-    stroke: color-mix(in srgb, var(--paper) 28%, transparent);
+    fill: var(--stone);
+    stroke: color-mix(in srgb, var(--accent) 50%, var(--slate));
     stroke-width: 0.6;
   }
 
@@ -229,12 +204,12 @@ const VB_H = 500;
     font-weight: 500;
     letter-spacing: var(--ls-eyebrow);
     text-transform: uppercase;
-    fill: color-mix(in srgb, var(--paper) 55%, transparent);
+    fill: var(--slate);
   }
 
   .ukmap__country-label {
     font-size: 11px;
-    fill: color-mix(in srgb, var(--paper) 45%, transparent);
+    fill: color-mix(in srgb, var(--slate) 75%, transparent);
   }
 
   .ukmap__pins {
@@ -268,28 +243,26 @@ const VB_H = 500;
   }
 
   .ukmap__pin-dot {
-    width: 9px;
-    height: 9px;
+    width: 10px;
+    height: 10px;
     background: var(--accent);
     border-radius: 50%;
     position: relative;
     z-index: 2;
     box-shadow:
-      0 0 0 2px color-mix(in srgb, var(--accent) 45%, transparent),
-      0 0 16px 2px color-mix(in srgb, var(--accent) 35%, transparent);
+      0 0 0 2px color-mix(in srgb, var(--paper) 90%, transparent);
   }
 
-  /* Pulse ring — terracotta to match the dot, sized down so the
-     animation grows out of the pin. */
+  /* Pulse ring — terracotta to match the dot. */
   .ukmap__pin-pulse {
     position: absolute;
     inset: 50%;
-    width: 9px;
-    height: 9px;
-    margin: -4.5px 0 0 -4.5px;
+    width: 10px;
+    height: 10px;
+    margin: -5px 0 0 -5px;
     border-radius: 50%;
     background: var(--accent);
-    opacity: 0.55;
+    opacity: 0.45;
     pointer-events: none;
   }
 
@@ -324,11 +297,10 @@ const VB_H = 500;
 
   .ukmap__pin-button:hover .ukmap__pin-dot,
   .ukmap__pin-button:focus-visible .ukmap__pin-dot {
-    transform: scale(1.55);
-    background: var(--paper);
+    transform: scale(1.6);
+    background: var(--ink);
     box-shadow:
-      0 0 0 3px color-mix(in srgb, var(--accent) 70%, transparent),
-      0 0 24px 4px color-mix(in srgb, var(--accent) 60%, transparent);
+      0 0 0 3px color-mix(in srgb, var(--accent) 80%, transparent);
   }
 
   /* Bring the hovered pin to the front so its tooltip isn't clipped by
@@ -343,8 +315,8 @@ const VB_H = 500;
     bottom: calc(100% + 10px);
     left: 50%;
     transform: translateX(-50%) translateY(4px);
-    background: var(--paper);
-    color: var(--ink);
+    background: var(--ink);
+    color: var(--paper);
     padding: 10px 14px;
     min-width: 180px;
     display: flex;
@@ -356,7 +328,7 @@ const VB_H = 500;
     text-align: left;
     white-space: nowrap;
     border-left: 2px solid var(--accent);
-    box-shadow: 0 12px 24px -8px rgba(17, 17, 17, 0.4);
+    box-shadow: 0 12px 24px -8px rgba(17, 17, 17, 0.25);
   }
 
   .ukmap__tooltip::after {
@@ -366,7 +338,7 @@ const VB_H = 500;
     left: 50%;
     transform: translateX(-50%);
     border: 6px solid transparent;
-    border-top-color: var(--paper);
+    border-top-color: var(--ink);
   }
 
   .ukmap__pin-button:hover .ukmap__tooltip,
@@ -385,7 +357,7 @@ const VB_H = 500;
 
   .ukmap__tooltip-name {
     font-size: var(--t-body-s);
-    color: var(--ink);
+    color: var(--paper);
   }
 
   /* Pins flagged flip="left" align their tooltip to the right edge of the
