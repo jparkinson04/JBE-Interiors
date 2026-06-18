@@ -23,9 +23,9 @@ interface Pin {
 
 /* Pins are sorted top-to-bottom (north-to-south) so their DOM order matches
    their visual order, which makes the stagger animation read naturally.
-   Glasgow groups the Waterloo Street and Clydebank pins (4px apart on the
-   map). All other cities stand alone — Cambridge and Ely sit close but
-   are different cities so each gets its own pin. */
+   Cities with multiple JBE projects (London, Glasgow) group them in one
+   tooltip — at this map scale Clydebank vs central Glasgow and St Pauls
+   vs Covent Garden read as the same point. */
 const pins: Pin[] = [
   {
     x: 244.3,
@@ -51,6 +51,12 @@ const pins: Pin[] = [
     primary: 'Hull',
     secondary: ["Nando's, Hull"],
     flip: 'left',
+  },
+  {
+    x: 252.0,
+    y: 359.6,
+    primary: 'Preston',
+    secondary: ['Wagamama, Preston'],
   },
   {
     x: 287.6,
@@ -88,7 +94,7 @@ const pins: Pin[] = [
     x: 327.3,
     y: 467.3,
     primary: 'London',
-    secondary: ['Zelman Meats, St Pauls', 'Parsons, Covent Garden'],
+    secondary: ['Sunday in Brooklyn, James Street', 'Black Tap, Piccadilly'],
     flip: 'left',
   },
 ];
@@ -267,6 +273,7 @@ const VB_H = 500;
     .ukmap__pin:nth-child(8)  .ukmap__pin-pulse { animation-delay: 2.1s; }
     .ukmap__pin:nth-child(9)  .ukmap__pin-pulse { animation-delay: 2.4s; }
     .ukmap__pin:nth-child(10) .ukmap__pin-pulse { animation-delay: 2.7s; }
+    .ukmap__pin:nth-child(11) .ukmap__pin-pulse { animation-delay: 3.0s; }
 
     .ukmap__pin-dot,
     .ukmap__tooltip {

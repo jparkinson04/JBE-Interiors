@@ -22,12 +22,12 @@ sections:
     paragraphs:
       - "Despite the extensive technical difficulties and demanding central London logistics, the project was executed to an exceptional standard. JBE Interiors is incredibly proud to have delivered this remarkable transformation, successfully turning a highly challenging brief into an outstanding, premium hospitality venue for Black Tap."
 gallery:
-  - image: "/images/projects/black-tap-piccadilly/gallery-1.jpg"
-  - image: "/images/projects/black-tap-piccadilly/gallery-2.jpg"
+  - image: "/images/projects/black-tap-piccadilly/gallery-6.jpg"
+  - image: "/images/projects/black-tap-piccadilly/gallery-5.jpg"
   - image: "/images/projects/black-tap-piccadilly/gallery-3.jpg"
   - image: "/images/projects/black-tap-piccadilly/gallery-4.jpg"
-  - image: "/images/projects/black-tap-piccadilly/gallery-5.jpg"
-  - image: "/images/projects/black-tap-piccadilly/gallery-6.jpg"
   - image: "/images/projects/black-tap-piccadilly/gallery-7.jpg"
+  - image: "/images/projects/black-tap-piccadilly/gallery-1.jpg"
+  - image: "/images/projects/black-tap-piccadilly/gallery-2.jpg"
   - image: "/images/projects/black-tap-piccadilly/gallery-8.jpg"
 ---

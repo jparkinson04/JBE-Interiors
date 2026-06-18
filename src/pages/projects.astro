@@ -6,10 +6,19 @@ const projects = (await getCollection('projects')).sort(
   (a, b) => a.data.order - b.data.order
 );
 
-const categoryLabel = (cat: string) =>
-  cat === 'hospitality-group'
-    ? 'Hospitality Group'
-    : cat.charAt(0).toUpperCase() + cat.slice(1);
+/* Each card cycles through the hero plus the first three gallery images
+   so visitors get a quick taste of each project from the index. All
+   cards advance in lockstep — same animation duration, same per-index
+   delay across every card, so the grid reads as a synchronised
+   editorial spread, not four independent banners. */
+const CYCLE_SECONDS = 5;
+const SLIDES_PER_CARD = 4;
+const TOTAL_SECONDS = CYCLE_SECONDS * SLIDES_PER_CARD;
+
+function cardSlides(hero: string, gallery: { image: string }[]): string[] {
+  const slides = [hero, ...gallery.map((g) => g.image)];
+  return slides.slice(0, SLIDES_PER_CARD);
+}
 ---
 
 <BaseLayout title="Projects — JBE Interiors">
@@ -29,23 +38,26 @@ const categoryLabel = (cat: string) =>
     <div class="projects-page__list-inner">
       <ul class="projects-page__grid" role="list">
         {projects.map((project, i) => {
-          const { data } = project;
-          const number = String(i + 1).padStart(2, '0');
+          const slides = cardSlides(project.data.hero_image, project.data.gallery);
           return (
             <li class="project-card">
-              <a href={`/projects/${data.slug}`} class="project-card__link">
-                <figure class="project-card__media">
-                  <img
-                    src={data.hero_image}
-                    alt={`${data.name} — interior view`}
-                    loading={i < 3 ? 'eager' : 'lazy'}
-                    decoding="async"
-                  />
+              <a href={`/projects/${project.data.slug}`} class="project-card__link">
+                <figure class="project-card__media" aria-hidden="false">
+                  {slides.map((src, slideIdx) => (
+                    <img
+                      class="project-card__slide"
+                      src={src}
+                      alt={slideIdx === 0 ? `${project.data.name} — interior view` : ''}
+                      loading={i < 2 && slideIdx === 0 ? 'eager' : 'lazy'}
+                      fetchpriority={i === 0 && slideIdx === 0 ? 'high' : 'auto'}
+                      decoding="async"
+                      style={`--slide-delay: ${-(TOTAL_SECONDS - slideIdx * CYCLE_SECONDS)}s;`}
+                    />
+                  ))}
                 </figure>
                 <div class="project-card__body">
-                  <p class="eyebrow">{number} / {categoryLabel(data.category)}</p>
-                  <h2 class="project-card__name">{data.name}</h2>
-                  <p class="project-card__location">{data.location}</p>
+                  <h2 class="project-card__name">{project.data.name}</h2>
+                  <p class="project-card__location">{project.data.location}</p>
                 </div>
               </a>
             </li>
@@ -66,7 +78,7 @@ const categoryLabel = (cat: string) =>
   </section>
 </BaseLayout>
 
-<style>
+<style define:vars={{ totalSeconds: `${TOTAL_SECONDS}s` }}>
   .projects-page__intro {
     background: var(--paper);
     padding-block: var(--space-l) var(--space-m);
@@ -105,14 +117,14 @@ const categoryLabel = (cat: string) =>
     padding-inline: var(--grid-margin);
   }
 
-  /* Compact 3-column grid. Each card is small enough that a portfolio
-     of 10+ projects fits on one page without forcing a long scroll. */
+  /* Two columns gives each project enough presence to read as a feature
+     card. Names sit larger, photographs do the talking. */
   .projects-page__grid {
     list-style: none;
     margin: 0;
     padding: 0;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     column-gap: var(--grid-gutter);
     row-gap: var(--space-l);
   }
@@ -132,44 +144,67 @@ const categoryLabel = (cat: string) =>
     aspect-ratio: 4 / 3;
     overflow: hidden;
     background: var(--stone);
+    position: relative;
   }
 
-  .project-card__media img {
+  .project-card__slide {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: center;
     display: block;
+    opacity: 0;
+    will-change: opacity;
+  }
+
+  /* First slide is opaque so the card never starts blank if the JS
+     reduced-motion branch is taken or the animation is paused. */
+  .project-card__slide:first-child {
+    opacity: 1;
   }
 
   @media (prefers-reduced-motion: no-preference) {
-    .project-card__media img {
-      transition: transform 600ms var(--ease-out), opacity 200ms ease;
+    .project-card__slide {
+      animation: cardSlideShow var(--totalSeconds) cubic-bezier(0.45, 0, 0.55, 1) infinite;
+      animation-delay: var(--slide-delay);
     }
-    .project-card__link:hover .project-card__media img,
-    .project-card__link:focus-visible .project-card__media img {
-      transform: scale(1.02);
+    /* Subtle hover zoom over the entire stack; keeps the image lifting
+       on interaction without breaking the synced timing. */
+    .project-card__media {
+      transition: transform 600ms var(--ease-out);
     }
+    .project-card__link:hover .project-card__media,
+    .project-card__link:focus-visible .project-card__media {
+      transform: scale(1.012);
+    }
+  }
+
+  @keyframes cardSlideShow {
+    0%, 18.75% { opacity: 1; }
+    25%, 93.75% { opacity: 0; }
+    100% { opacity: 1; }
   }
 
   .project-card__body {
     display: flex;
     flex-direction: column;
     gap: 4px;
+    padding-top: var(--space-xs);
   }
 
   .project-card__name {
     font-family: var(--font-serif);
-    font-size: clamp(20px, 1.8vw, 26px);
+    font-size: clamp(26px, 2.4vw, 38px);
     font-weight: 400;
-    letter-spacing: -0.015em;
-    line-height: 1.1;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
     color: var(--ink);
-    margin-top: 4px;
   }
 
   .project-card__location {
-    font-size: var(--t-body-s);
+    font-size: var(--t-body-m);
     color: var(--slate);
   }
 
@@ -195,14 +230,7 @@ const categoryLabel = (cat: string) =>
     max-width: 52ch;
   }
 
-  @media (max-width: 960px) {
-    .projects-page__grid {
-      grid-template-columns: repeat(2, 1fr);
-      row-gap: var(--space-m);
-    }
-  }
-
-  @media (max-width: 560px) {
+  @media (max-width: 720px) {
     .projects-page__grid {
       grid-template-columns: 1fr;
       row-gap: var(--space-m);

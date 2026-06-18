@@ -26,14 +26,14 @@ sections:
     paragraphs:
       - "Despite these stringent constraints, the project was highly rewarding. The client and their design team maintained a precise, uncompromising vision for the restaurant's aesthetic and atmosphere. Through close collaboration and rigorous project management, this vision was successfully realised, resulting in a premium, atmospheric dining space in the heart of London."
 gallery:
-  - image: "/images/projects/sunday-in-brooklyn/gallery-1.jpg"
-  - image: "/images/projects/sunday-in-brooklyn/gallery-2.jpg"
-  - image: "/images/projects/sunday-in-brooklyn/gallery-3.jpg"
   - image: "/images/projects/sunday-in-brooklyn/gallery-4.jpg"
   - image: "/images/projects/sunday-in-brooklyn/gallery-5.jpg"
+  - image: "/images/projects/sunday-in-brooklyn/gallery-1.jpg"
   - image: "/images/projects/sunday-in-brooklyn/gallery-6.jpg"
-  - image: "/images/projects/sunday-in-brooklyn/gallery-7.jpg"
+  - image: "/images/projects/sunday-in-brooklyn/gallery-2.jpg"
+  - image: "/images/projects/sunday-in-brooklyn/gallery-3.jpg"
   - image: "/images/projects/sunday-in-brooklyn/gallery-8.jpg"
+  - image: "/images/projects/sunday-in-brooklyn/gallery-7.jpg"
   - image: "/images/projects/sunday-in-brooklyn/gallery-9.jpg"
   - image: "/images/projects/sunday-in-brooklyn/gallery-10.jpg"
 ---
