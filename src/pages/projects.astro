@@ -6,14 +6,10 @@ const projects = (await getCollection('projects')).sort(
   (a, b) => a.data.order - b.data.order
 );
 
-/* Each card cycles through the hero plus the first three gallery images
-   so visitors get a quick taste of each project from the index. All
-   cards advance in lockstep — same animation duration, same per-index
-   delay across every card, so the grid reads as a synchronised
-   editorial spread, not four independent banners. */
-const CYCLE_SECONDS = 5;
-const SLIDES_PER_CARD = 4;
-const TOTAL_SECONDS = CYCLE_SECONDS * SLIDES_PER_CARD;
+/* Each card shows three images — hero + first two gallery entries —
+   with a small pair of arrow buttons in the bottom-right of the image.
+   No auto-rotation; visitors flick through at their own pace. */
+const SLIDES_PER_CARD = 3;
 
 function cardSlides(hero: string, gallery: { image: string }[]): string[] {
   const slides = [hero, ...gallery.map((g) => g.image)];
@@ -40,18 +36,17 @@ function cardSlides(hero: string, gallery: { image: string }[]): string[] {
         {projects.map((project, i) => {
           const slides = cardSlides(project.data.hero_image, project.data.gallery);
           return (
-            <li class="project-card">
+            <li class="project-card" data-card>
               <a href={`/projects/${project.data.slug}`} class="project-card__link">
-                <figure class="project-card__media" aria-hidden="false">
+                <figure class="project-card__media">
                   {slides.map((src, slideIdx) => (
                     <img
-                      class="project-card__slide"
+                      class={`project-card__slide${slideIdx === 0 ? ' is-active' : ''}`}
                       src={src}
                       alt={slideIdx === 0 ? `${project.data.name} — interior view` : ''}
                       loading={i < 2 && slideIdx === 0 ? 'eager' : 'lazy'}
                       fetchpriority={i === 0 && slideIdx === 0 ? 'high' : 'auto'}
                       decoding="async"
-                      style={`--slide-delay: ${-(TOTAL_SECONDS - slideIdx * CYCLE_SECONDS)}s;`}
                     />
                   ))}
                 </figure>
@@ -60,6 +55,34 @@ function cardSlides(hero: string, gallery: { image: string }[]): string[] {
                   <p class="project-card__location">{project.data.location}</p>
                 </div>
               </a>
+
+              {slides.length > 1 && (
+                <div class="project-card__controls" aria-hidden="false">
+                  <span class="project-card__counter" data-counter>1 / {slides.length}</span>
+                  <div class="project-card__nav">
+                    <button
+                      type="button"
+                      class="project-card__nav-btn"
+                      data-nav="prev"
+                      aria-label={`Previous image for ${project.data.name}`}
+                    >
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <path d="M15 6 9 12l6 6" />
+                      </svg>
+                    </button>
+                    <button
+                      type="button"
+                      class="project-card__nav-btn"
+                      data-nav="next"
+                      aria-label={`Next image for ${project.data.name}`}
+                    >
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <path d="M9 6 15 12l-6 6" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              )}
             </li>
           );
         })}
@@ -78,7 +101,38 @@ function cardSlides(hero: string, gallery: { image: string }[]): string[] {
   </section>
 </BaseLayout>
 
-<style define:vars={{ totalSeconds: `${TOTAL_SECONDS}s` }}>
+<script>
+  /* Manual flick-through for each project card. No auto-cycle —
+     visitors advance the carousel via the arrow buttons. Counter
+     updates so visitors know how many shots remain. */
+  document.querySelectorAll<HTMLElement>('[data-card]').forEach((card) => {
+    const slides = card.querySelectorAll<HTMLElement>('.project-card__slide');
+    const counter = card.querySelector<HTMLElement>('[data-counter]');
+    const prev = card.querySelector<HTMLButtonElement>('[data-nav="prev"]');
+    const next = card.querySelector<HTMLButtonElement>('[data-nav="next"]');
+    if (slides.length < 2 || !prev || !next) return;
+
+    let active = 0;
+    const show = (i: number) => {
+      active = (i + slides.length) % slides.length;
+      slides.forEach((slide, idx) => slide.classList.toggle('is-active', idx === active));
+      if (counter) counter.textContent = `${active + 1} / ${slides.length}`;
+    };
+
+    prev.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      show(active - 1);
+    });
+    next.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      show(active + 1);
+    });
+  });
+</script>
+
+<style>
   .projects-page__intro {
     background: var(--paper);
     padding-block: var(--space-l) var(--space-m);
@@ -117,8 +171,6 @@ function cardSlides(hero: string, gallery: { image: string }[]): string[] {
     padding-inline: var(--grid-margin);
   }
 
-  /* Two columns gives each project enough presence to read as a feature
-     card. Names sit larger, photographs do the talking. */
   .projects-page__grid {
     list-style: none;
     margin: 0;
@@ -131,6 +183,7 @@ function cardSlides(hero: string, gallery: { image: string }[]): string[] {
 
   .project-card {
     display: block;
+    position: relative;
   }
 
   .project-card__link {
@@ -159,32 +212,82 @@ function cardSlides(hero: string, gallery: { image: string }[]): string[] {
     will-change: opacity;
   }
 
-  /* First slide is opaque so the card never starts blank if the JS
-     reduced-motion branch is taken or the animation is paused. */
-  .project-card__slide:first-child {
+  @media (prefers-reduced-motion: no-preference) {
+    .project-card__slide {
+      transition: opacity 400ms var(--ease-out);
+    }
+  }
+
+  .project-card__slide.is-active {
     opacity: 1;
   }
 
+  /* Slide controls — sit over the bottom-right of the image as a small
+     glass-paper bar. Counter on the left, two arrows on the right. */
+  .project-card__controls {
+    position: absolute;
+    /* Anchor to image, not the body section below. */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /* Make the wrapper non-blocking; only the children catch pointer. */
+    pointer-events: none;
+  }
+
+  .project-card__counter,
+  .project-card__nav {
+    pointer-events: auto;
+  }
+
+  .project-card__counter {
+    position: absolute;
+    bottom: calc(var(--space-s) + var(--space-s));
+    left: var(--space-s);
+    font-size: var(--t-eyebrow);
+    font-weight: 500;
+    letter-spacing: var(--ls-eyebrow);
+    text-transform: uppercase;
+    color: var(--paper);
+    background: rgba(17, 17, 17, 0.55);
+    backdrop-filter: blur(6px);
+    padding: 4px 8px;
+  }
+
+  .project-card__nav {
+    position: absolute;
+    bottom: calc(var(--space-s) + var(--space-s));
+    right: var(--space-s);
+    display: flex;
+    gap: 4px;
+  }
+
+  .project-card__nav-btn {
+    width: 32px;
+    height: 32px;
+    background: rgba(247, 245, 240, 0.92);
+    backdrop-filter: blur(6px);
+    color: var(--ink);
+    border: 0;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+
   @media (prefers-reduced-motion: no-preference) {
-    .project-card__slide {
-      animation: cardSlideShow var(--totalSeconds) cubic-bezier(0.45, 0, 0.55, 1) infinite;
-      animation-delay: var(--slide-delay);
-    }
-    /* Subtle hover zoom over the entire stack; keeps the image lifting
-       on interaction without breaking the synced timing. */
-    .project-card__media {
-      transition: transform 600ms var(--ease-out);
-    }
-    .project-card__link:hover .project-card__media,
-    .project-card__link:focus-visible .project-card__media {
-      transform: scale(1.012);
+    .project-card__nav-btn {
+      transition:
+        background-color var(--motion-fast) ease,
+        color var(--motion-fast) ease;
     }
   }
 
-  @keyframes cardSlideShow {
-    0%, 18.75% { opacity: 1; }
-    25%, 93.75% { opacity: 0; }
-    100% { opacity: 1; }
+  .project-card__nav-btn:hover,
+  .project-card__nav-btn:focus-visible {
+    background: var(--ink);
+    color: var(--paper);
   }
 
   .project-card__body {

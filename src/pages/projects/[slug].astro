@@ -51,53 +51,67 @@ const meta = [
       <header class="project-detail__header">
         <p class="eyebrow">{categoryLabel}</p>
         <h1 class="project-detail__name">{data.name}</h1>
+        <p class="project-detail__location">{data.location}</p>
       </header>
 
-      <section class="project-detail__body">
-        <div class="project-detail__description">
-          {data.description.split(/\n\n+/).filter(Boolean).map((para) => (
-            <p>{para.trim()}</p>
-          ))}
-
-          {data.sections.map((section) => (
-            <div class="project-detail__section">
-              <h3 class="project-detail__section-heading">{section.heading}</h3>
-              {section.paragraphs.map((para) => (
-                <p>{para}</p>
-              ))}
-              {section.bullets.length > 0 && (
-                <ul class="project-detail__bullets" role="list">
-                  {section.bullets.map((b) => <li>{b}</li>)}
-                </ul>
-              )}
-            </div>
-          ))}
-
-          {data.features.length > 0 && (
-            <div class="project-detail__features">
-              <p class="eyebrow">Key features</p>
-              <ul role="list">
-                {data.features.map((f) => <li>{f}</li>)}
-              </ul>
-            </div>
-          )}
-        </div>
-
-        <dl class="project-detail__meta">
+      {meta.length > 0 && (
+        <dl class="project-detail__credit-strip">
           {meta.map((m) => (
-            <div class="project-detail__meta-row">
+            <div>
               <dt class="eyebrow">{m.label}</dt>
               <dd>{m.value}</dd>
             </div>
           ))}
         </dl>
-      </section>
+      )}
+
+      <div class="project-detail__body">
+        {data.description.split(/\n\n+/).filter(Boolean).map((para, idx) => (
+          <p class={idx === 0 ? 'project-detail__lead' : ''}>{para.trim()}</p>
+        ))}
+
+        {data.sections.map((section, idx) => (
+          <section class="project-detail__section">
+            <header class="project-detail__section-head">
+              <span class="project-detail__section-number">
+                {String(idx + 1).padStart(2, '0')}
+              </span>
+              <h2 class="project-detail__section-heading">{section.heading}</h2>
+            </header>
+            {section.paragraphs.map((para) => (
+              <p>{para}</p>
+            ))}
+            {section.bullets.length > 0 && (
+              <ul class="project-detail__bullets" role="list">
+                {section.bullets.map((b) => <li>{b}</li>)}
+              </ul>
+            )}
+          </section>
+        ))}
+
+        {data.features.length > 0 && (
+          <section class="project-detail__section">
+            <header class="project-detail__section-head">
+              <span class="project-detail__section-number">&mdash;</span>
+              <h2 class="project-detail__section-heading">Key features</h2>
+            </header>
+            <ul class="project-detail__bullets" role="list">
+              {data.features.map((f) => <li>{f}</li>)}
+            </ul>
+          </section>
+        )}
+      </div>
 
       {data.gallery.length > 0 && (
         <section class="project-detail__gallery" aria-label="Project gallery">
           {data.gallery.map((img) => (
             <figure>
-              <img src={img.image} alt={img.caption ?? `${data.name} detail`} loading="lazy" decoding="async" />
+              <img
+                src={img.image}
+                alt={img.caption ?? `${data.name} detail`}
+                loading="lazy"
+                decoding="async"
+              />
               {img.caption && <figcaption>{img.caption}</figcaption>}
             </figure>
           ))}
@@ -123,13 +137,14 @@ const meta = [
 
 <style>
   .project-detail {
-    padding-bottom: var(--space-xl);
+    padding-bottom: var(--space-l);
   }
 
+  /* Hero — cinematic ratio, not viewport-dominating. */
   .project-detail__hero {
     margin: 0;
-    aspect-ratio: 16 / 9;
-    max-height: 56vh;
+    aspect-ratio: 21 / 9;
+    max-height: 52vh;
     overflow: hidden;
   }
 
@@ -149,8 +164,8 @@ const meta = [
   }
 
   .project-detail__header {
-    margin-bottom: var(--space-m);
     max-width: 880px;
+    margin-bottom: var(--space-m);
   }
 
   .project-detail__name {
@@ -162,54 +177,116 @@ const meta = [
     margin-top: var(--space-xs);
   }
 
-  .project-detail__body {
-    display: grid;
-    grid-template-columns: minmax(0, 7fr) minmax(0, 3fr);
-    gap: var(--space-l);
-    align-items: start;
+  .project-detail__location {
+    margin-top: var(--space-s);
+    font-size: var(--t-body-l);
+    color: var(--slate);
   }
 
-  .project-detail__description {
+  /* Credit strip — runs full container width, hairlines top and bottom,
+     like a magazine project credit row. */
+  .project-detail__credit-strip {
+    margin: 0 0 var(--space-l);
+    padding: var(--space-s) 0;
+    border-top: 1px solid var(--bone);
+    border-bottom: 1px solid var(--bone);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: var(--space-m);
+  }
+
+  .project-detail__credit-strip > div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .project-detail__credit-strip dt {
+    margin: 0;
+  }
+
+  .project-detail__credit-strip dd {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: clamp(18px, 1.4vw, 22px);
+    font-weight: 400;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+
+  /* Body — single focused reading column, no sidebar. */
+  .project-detail__body {
+    max-width: 720px;
     display: flex;
     flex-direction: column;
     gap: var(--space-s);
   }
 
-  .project-detail__description p {
+  .project-detail__body p {
     font-size: var(--t-body-m);
     color: var(--ink);
     line-height: var(--lh-body);
-    max-width: 62ch;
   }
 
-  /* Structured body sections — h3 heading above its paragraphs and an
-     optional bulleted list. Uses the same description column width and
-     the existing 'dash' bullet style as features. */
+  /* First paragraph reads as a lead — larger serif italic so it sets
+     the editorial tone for the article that follows. */
+  .project-detail__lead {
+    font-family: var(--font-serif);
+    font-size: clamp(20px, 1.7vw, 26px);
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.4;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    margin-bottom: var(--space-s);
+  }
+
+  /* Numbered editorial sections — number sits beside the heading as a
+     small serif marker, replacing the document-style flat h3 stack. */
   .project-detail__section {
-    margin-top: var(--space-m);
+    margin-top: var(--space-l);
+    padding-top: var(--space-m);
+    border-top: 1px solid var(--bone);
     display: flex;
     flex-direction: column;
     gap: var(--space-s);
+  }
+
+  .project-detail__section-head {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-s);
+    margin-bottom: 4px;
+  }
+
+  .project-detail__section-number {
+    font-family: var(--font-serif);
+    font-size: clamp(15px, 1vw, 18px);
+    font-weight: 400;
+    font-style: italic;
+    color: var(--accent);
+    line-height: 1;
+    flex-shrink: 0;
   }
 
   .project-detail__section-heading {
     font-family: var(--font-serif);
-    font-size: clamp(20px, 1.6vw, 26px);
+    font-size: clamp(22px, 1.8vw, 28px);
     font-weight: 400;
     letter-spacing: -0.015em;
     line-height: 1.15;
     color: var(--ink);
-    max-width: 62ch;
+    margin: 0;
   }
 
   .project-detail__bullets {
     list-style: none;
-    margin: 0;
+    margin: var(--space-xs) 0 0;
     padding: 0;
     display: flex;
     flex-direction: column;
     gap: var(--space-xs);
-    max-width: 62ch;
   }
 
   .project-detail__bullets li {
@@ -227,85 +304,46 @@ const meta = [
     top: 0.7em;
     width: 12px;
     height: 1px;
-    background: var(--slate);
+    background: var(--accent);
   }
 
-  .project-detail__features {
-    margin-top: var(--space-s);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-s);
-  }
-
-  .project-detail__features ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-xs);
-  }
-
-  .project-detail__features li {
-    font-size: var(--t-body-m);
-    color: var(--ink);
-    padding-left: 22px;
-    position: relative;
-  }
-
-  .project-detail__features li::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0.7em;
-    width: 12px;
-    height: 1px;
-    background: var(--slate);
-  }
-
-  .project-detail__meta {
-    margin: 0;
-    padding: var(--space-s) 0 0;
-    border-top: 1px solid var(--bone);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-s);
-  }
-
-  .project-detail__meta-row {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
-
-  .project-detail__meta-row dd {
-    margin: 0;
-    font-size: var(--t-body-s);
-    color: var(--ink);
-  }
-
+  /* Gallery — 2-column grid (responsive), uniform 4:3 tiles. Replaces
+     the vertical stack so the page reads as compact, not a long scroll. */
   .project-detail__gallery {
-    margin-top: var(--space-l);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-m);
+    margin-top: var(--space-xl);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-s);
   }
 
   .project-detail__gallery figure {
     margin: 0;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
   }
 
   .project-detail__gallery img {
     width: 100%;
-    height: auto;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
     display: block;
   }
 
   .project-detail__gallery figcaption {
-    margin-top: var(--space-s);
+    margin-top: var(--space-xs);
     font-size: var(--t-caption);
     color: var(--slate);
     line-height: var(--lh-caption);
+  }
+
+  /* Asymmetric accent: every third tile spans wide, so the grid reads
+     as an editorial spread rather than a uniform thumbnail wall. */
+  @media (min-width: 720px) {
+    .project-detail__gallery figure:nth-child(5n + 1) {
+      grid-column: span 2;
+      aspect-ratio: 21 / 9;
+    }
   }
 
   .project-detail__nav {
@@ -344,20 +382,20 @@ const meta = [
     font-weight: 400;
   }
 
-  @media (max-width: 960px) {
-    .project-detail__body {
-      grid-template-columns: 1fr;
-      gap: var(--space-l);
-    }
-    .project-detail__meta {
-      padding-top: var(--space-l);
-    }
+  @media (max-width: 720px) {
     .project-detail__hero {
       aspect-ratio: 4 / 3;
+      max-height: 60vh;
+    }
+    .project-detail__credit-strip {
+      grid-template-columns: 1fr 1fr;
+    }
+    .project-detail__gallery {
+      grid-template-columns: 1fr;
     }
     .project-detail__nav {
       grid-template-columns: 1fr;
-      gap: var(--space-m);
+      gap: var(--space-s);
     }
     .project-detail__nav-link--next {
       text-align: left;
