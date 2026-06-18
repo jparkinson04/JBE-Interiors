@@ -5,15 +5,15 @@ import UKMap from './UKMap.astro';
 <section class="about-map" aria-label="About JBE Interiors">
   <div class="about-map__inner">
     <dl class="about-map__meta">
-      <div>
+      <div class="about-map__meta-tile">
         <dt class="eyebrow">Operating since</dt>
         <dd>1998</dd>
       </div>
-      <div>
+      <div class="about-map__meta-tile">
         <dt class="eyebrow">Based</dt>
         <dd>Doncaster</dd>
       </div>
-      <div>
+      <div class="about-map__meta-tile">
         <dt class="eyebrow">Coverage</dt>
         <dd>UK, Ireland, Jersey</dd>
       </div>
@@ -21,7 +21,6 @@ import UKMap from './UKMap.astro';
 
     <div class="about-map__grid">
       <div class="about-map__copy">
-        <span class="section-mark" aria-hidden="true"></span>
         <p class="eyebrow">About</p>
         <h2 class="about-map__heading">
           Restaurant and retail fit&#8209;outs, from concept to handover.
@@ -56,9 +55,7 @@ import UKMap from './UKMap.astro';
 <style>
   .about-map {
     background: var(--paper);
-    /* Section top padding intentionally tight — the meta strip should
-       sit close to the hero rather than floating in space. */
-    padding-block: var(--space-l) var(--space-m);
+    padding-block: var(--space-l) var(--space-l);
   }
 
   .about-map__inner {
@@ -67,47 +64,38 @@ import UKMap from './UKMap.astro';
     padding-inline: var(--grid-margin);
   }
 
-  /* Masthead-style meta strip at the top of the section. Reads like a
-     publication's standfirst credits: tight uppercase eyebrow above a
-     larger serif value, separated by thin column dividers. */
+  /* Stats as three discrete boxes with breathing room between them —
+     no hairline strip, no column dividers. Each tile matches the meta
+     tiles used on project detail pages: stone bg, terracotta seam on
+     the left, eyebrow above a serif value. */
   .about-map__meta {
-    margin: 0 0 var(--space-l);
-    padding: var(--space-s) 0;
-    border-top: 1px solid var(--bone);
-    border-bottom: 1px solid var(--bone);
+    margin: 0 0 var(--space-xl);
+    padding: 0;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-m);
   }
 
-  .about-map__meta > div {
-    padding-inline: var(--space-l);
+  .about-map__meta-tile {
+    background: var(--stone);
+    padding: var(--space-m);
     display: flex;
     flex-direction: column;
     gap: 4px;
-    border-left: 1px solid var(--bone);
+    border-left: 2px solid var(--accent);
   }
 
-  .about-map__meta > div:first-child {
-    border-left: 0;
-    padding-left: 0;
-  }
-
-  .about-map__meta > div:last-child {
-    padding-right: 0;
-  }
-
-  .about-map__meta dt {
+  .about-map__meta-tile dt {
     margin: 0;
   }
 
-  .about-map__meta dd {
+  .about-map__meta-tile dd {
     margin: 0;
     font-family: var(--font-serif);
     font-weight: 400;
     font-size: clamp(20px, 1.6vw, 26px);
     letter-spacing: -0.01em;
-    line-height: 1.05;
+    line-height: 1.15;
     color: var(--ink);
   }
 
@@ -157,14 +145,7 @@ import UKMap from './UKMap.astro';
   @media (max-width: 900px) {
     .about-map__meta {
       grid-template-columns: 1fr;
-    }
-    .about-map__meta > div {
-      padding: var(--space-s) 0;
-      border-left: 0;
-      border-top: 1px solid var(--bone);
-    }
-    .about-map__meta > div:first-child {
-      border-top: 0;
+      gap: var(--space-s);
     }
     .about-map__grid {
       grid-template-columns: 1fr;
