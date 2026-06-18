@@ -59,6 +59,20 @@ const meta = [
             <p>{para.trim()}</p>
           ))}
 
+          {data.sections.map((section) => (
+            <div class="project-detail__section">
+              <h3 class="project-detail__section-heading">{section.heading}</h3>
+              {section.paragraphs.map((para) => (
+                <p>{para}</p>
+              ))}
+              {section.bullets.length > 0 && (
+                <ul class="project-detail__bullets" role="list">
+                  {section.bullets.map((b) => <li>{b}</li>)}
+                </ul>
+              )}
+            </div>
+          ))}
+
           {data.features.length > 0 && (
             <div class="project-detail__features">
               <p class="eyebrow">Key features</p>
@@ -166,6 +180,54 @@ const meta = [
     color: var(--ink);
     line-height: var(--lh-body);
     max-width: 62ch;
+  }
+
+  /* Structured body sections — h3 heading above its paragraphs and an
+     optional bulleted list. Uses the same description column width and
+     the existing 'dash' bullet style as features. */
+  .project-detail__section {
+    margin-top: var(--space-m);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+  }
+
+  .project-detail__section-heading {
+    font-family: var(--font-serif);
+    font-size: clamp(20px, 1.6vw, 26px);
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    line-height: 1.15;
+    color: var(--ink);
+    max-width: 62ch;
+  }
+
+  .project-detail__bullets {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    max-width: 62ch;
+  }
+
+  .project-detail__bullets li {
+    font-size: var(--t-body-m);
+    color: var(--ink);
+    line-height: var(--lh-body);
+    padding-left: 22px;
+    position: relative;
+  }
+
+  .project-detail__bullets li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.7em;
+    width: 12px;
+    height: 1px;
+    background: var(--slate);
   }
 
   .project-detail__features {
