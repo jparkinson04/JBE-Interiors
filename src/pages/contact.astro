@@ -4,18 +4,17 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 <BaseLayout title="Contact — JBE Interiors">
   <section class="contact">
-    <figure class="contact__image" aria-hidden="true">
-      <img
-        src="/images/projects/sunday-in-brooklyn/gallery-9.jpg"
-        alt=""
-        width="1800"
-        height="1200"
+    <figure class="contact__image" aria-label="Map showing JBE Interiors, 305 Churchway, Doncaster">
+      <iframe
+        class="contact__map"
+        src="https://www.google.com/maps?q=305+Churchway,+Doncaster,+DN1+2TB&output=embed"
+        title="JBE Interiors — 305 Churchway, Doncaster, DN1 2TB"
         loading="eager"
-        fetchpriority="high"
-        decoding="async"
-      />
+        referrerpolicy="no-referrer-when-downgrade"
+        allowfullscreen
+      ></iframe>
       <figcaption class="contact__image-caption">
-        Sunday in Brooklyn, James Street
+        305 Churchway, Doncaster, DN1&nbsp;2TB
       </figcaption>
     </figure>
 
@@ -107,12 +106,20 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     background: var(--ink);
   }
 
-  .contact__image img {
+  .contact__image img,
+  .contact__map {
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: center;
     display: block;
+    border: 0;
+  }
+
+  /* Desaturate the Google Maps embed so it sits visually consistent
+     with the warm-monochrome palette of the rest of the site. */
+  .contact__map {
+    filter: grayscale(0.7) contrast(0.95);
   }
 
   .contact__image-caption {
