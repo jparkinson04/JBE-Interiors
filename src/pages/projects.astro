@@ -58,29 +58,26 @@ function cardSlides(hero: string, gallery: { image: string }[]): string[] {
 
               {slides.length > 1 && (
                 <div class="project-card__controls" aria-hidden="false">
-                  <span class="project-card__counter" data-counter>1 / {slides.length}</span>
-                  <div class="project-card__nav">
-                    <button
-                      type="button"
-                      class="project-card__nav-btn"
-                      data-nav="prev"
-                      aria-label={`Previous image for ${project.data.name}`}
-                    >
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                        <path d="M15 6 9 12l6 6" />
-                      </svg>
-                    </button>
-                    <button
-                      type="button"
-                      class="project-card__nav-btn"
-                      data-nav="next"
-                      aria-label={`Next image for ${project.data.name}`}
-                    >
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                        <path d="M9 6 15 12l-6 6" />
-                      </svg>
-                    </button>
-                  </div>
+                  <button
+                    type="button"
+                    class="project-card__nav-btn project-card__nav-btn--prev"
+                    data-nav="prev"
+                    aria-label={`Previous image for ${project.data.name}`}
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                      <path d="M15 6 9 12l6 6" />
+                    </svg>
+                  </button>
+                  <button
+                    type="button"
+                    class="project-card__nav-btn project-card__nav-btn--next"
+                    data-nav="next"
+                    aria-label={`Next image for ${project.data.name}`}
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                      <path d="M9 6 15 12l-6 6" />
+                    </svg>
+                  </button>
                 </div>
               )}
             </li>
@@ -107,7 +104,6 @@ function cardSlides(hero: string, gallery: { image: string }[]): string[] {
      updates so visitors know how many shots remain. */
   document.querySelectorAll<HTMLElement>('[data-card]').forEach((card) => {
     const slides = card.querySelectorAll<HTMLElement>('.project-card__slide');
-    const counter = card.querySelector<HTMLElement>('[data-counter]');
     const prev = card.querySelector<HTMLButtonElement>('[data-nav="prev"]');
     const next = card.querySelector<HTMLButtonElement>('[data-nav="next"]');
     if (slides.length < 2 || !prev || !next) return;
@@ -116,7 +112,6 @@ function cardSlides(hero: string, gallery: { image: string }[]): string[] {
     const show = (i: number) => {
       active = (i + slides.length) % slides.length;
       slides.forEach((slide, idx) => slide.classList.toggle('is-active', idx === active));
-      if (counter) counter.textContent = `${active + 1} / ${slides.length}`;
     };
 
     prev.addEventListener('click', (e) => {
@@ -222,50 +217,28 @@ function cardSlides(hero: string, gallery: { image: string }[]): string[] {
     opacity: 1;
   }
 
-  /* Slide controls — sit over the bottom-right of the image as a small
-     glass-paper bar. Counter on the left, two arrows on the right. */
+  /* Slide controls — arrow buttons vertically centred on the image's
+     left and right edges. Counter dropped: keeps the image clean and
+     it's obvious the arrows cycle the photos. */
   .project-card__controls {
     position: absolute;
-    /* Anchor to image, not the body section below. */
+    /* Anchor to the image only; the wrapper itself is pointer-transparent. */
     top: 0;
     left: 0;
     right: 0;
-    bottom: 0;
-    /* Make the wrapper non-blocking; only the children catch pointer. */
+    /* Bottom shy of the body section so arrows don't drift onto text. */
+    bottom: calc(var(--space-s) + var(--space-xs));
     pointer-events: none;
   }
 
-  .project-card__counter,
-  .project-card__nav {
-    pointer-events: auto;
-  }
-
-  .project-card__counter {
-    position: absolute;
-    bottom: calc(var(--space-s) + var(--space-s));
-    left: var(--space-s);
-    font-size: var(--t-eyebrow);
-    font-weight: 500;
-    letter-spacing: var(--ls-eyebrow);
-    text-transform: uppercase;
-    color: var(--paper);
-    background: rgba(17, 17, 17, 0.55);
-    backdrop-filter: blur(6px);
-    padding: 4px 8px;
-  }
-
-  .project-card__nav {
-    position: absolute;
-    bottom: calc(var(--space-s) + var(--space-s));
-    right: var(--space-s);
-    display: flex;
-    gap: 4px;
-  }
-
   .project-card__nav-btn {
-    width: 32px;
-    height: 32px;
-    background: rgba(247, 245, 240, 0.92);
+    pointer-events: auto;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    background: rgba(247, 245, 240, 0.9);
     backdrop-filter: blur(6px);
     color: var(--ink);
     border: 0;
@@ -274,6 +247,14 @@ function cardSlides(hero: string, gallery: { image: string }[]): string[] {
     align-items: center;
     justify-content: center;
     padding: 0;
+  }
+
+  .project-card__nav-btn--prev {
+    left: var(--space-s);
+  }
+
+  .project-card__nav-btn--next {
+    right: var(--space-s);
   }
 
   @media (prefers-reduced-motion: no-preference) {

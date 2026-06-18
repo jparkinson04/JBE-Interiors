@@ -51,13 +51,12 @@ const meta = [
       <header class="project-detail__header">
         <p class="eyebrow">{categoryLabel}</p>
         <h1 class="project-detail__name">{data.name}</h1>
-        <p class="project-detail__location">{data.location}</p>
       </header>
 
       {meta.length > 0 && (
-        <dl class="project-detail__credit-strip">
+        <dl class="project-detail__meta">
           {meta.map((m) => (
-            <div>
+            <div class="project-detail__meta-tile">
               <dt class="eyebrow">{m.label}</dt>
               <dd>{m.value}</dd>
             </div>
@@ -65,42 +64,44 @@ const meta = [
         </dl>
       )}
 
-      <div class="project-detail__body">
-        {data.description.split(/\n\n+/).filter(Boolean).map((para, idx) => (
-          <p class={idx === 0 ? 'project-detail__lead' : ''}>{para.trim()}</p>
-        ))}
+      {data.description && (
+        <p class="project-detail__lead">{data.description.trim()}</p>
+      )}
 
-        {data.sections.map((section, idx) => (
-          <section class="project-detail__section">
-            <header class="project-detail__section-head">
-              <span class="project-detail__section-number">
-                {String(idx + 1).padStart(2, '0')}
-              </span>
-              <h2 class="project-detail__section-heading">{section.heading}</h2>
-            </header>
-            {section.paragraphs.map((para) => (
-              <p>{para}</p>
-            ))}
-            {section.bullets.length > 0 && (
-              <ul class="project-detail__bullets" role="list">
-                {section.bullets.map((b) => <li>{b}</li>)}
-              </ul>
-            )}
-          </section>
-        ))}
+      {data.sections.length > 0 && (
+        <div class="project-detail__sections">
+          {data.sections.map((section, idx) => (
+            <section class="project-detail__section">
+              <header class="project-detail__section-head">
+                <span class="project-detail__section-number">
+                  {String(idx + 1).padStart(2, '0')}
+                </span>
+                <h2 class="project-detail__section-heading">{section.heading}</h2>
+              </header>
+              {section.paragraphs.map((para) => (
+                <p>{para}</p>
+              ))}
+              {section.bullets.length > 0 && (
+                <ul class="project-detail__bullets" role="list">
+                  {section.bullets.map((b) => <li>{b}</li>)}
+                </ul>
+              )}
+            </section>
+          ))}
+        </div>
+      )}
 
-        {data.features.length > 0 && (
-          <section class="project-detail__section">
-            <header class="project-detail__section-head">
-              <span class="project-detail__section-number">&mdash;</span>
-              <h2 class="project-detail__section-heading">Key features</h2>
-            </header>
-            <ul class="project-detail__bullets" role="list">
-              {data.features.map((f) => <li>{f}</li>)}
-            </ul>
-          </section>
-        )}
-      </div>
+      {data.features.length > 0 && (
+        <section class="project-detail__section project-detail__section--features">
+          <header class="project-detail__section-head">
+            <span class="project-detail__section-number" aria-hidden="true">&mdash;</span>
+            <h2 class="project-detail__section-heading">Key features</h2>
+          </header>
+          <ul class="project-detail__bullets" role="list">
+            {data.features.map((f) => <li>{f}</li>)}
+          </ul>
+        </section>
+      )}
 
       {data.gallery.length > 0 && (
         <section class="project-detail__gallery" aria-label="Project gallery">
@@ -140,11 +141,11 @@ const meta = [
     padding-bottom: var(--space-l);
   }
 
-  /* Hero — cinematic ratio, not viewport-dominating. */
+  /* Hero — wide-cinematic ratio. Doesn't dominate above-the-fold. */
   .project-detail__hero {
     margin: 0;
     aspect-ratio: 21 / 9;
-    max-height: 52vh;
+    max-height: 48vh;
     overflow: hidden;
   }
 
@@ -177,80 +178,73 @@ const meta = [
     margin-top: var(--space-xs);
   }
 
-  .project-detail__location {
-    margin-top: var(--space-s);
-    font-size: var(--t-body-l);
-    color: var(--slate);
-  }
-
-  /* Credit strip — runs full container width, hairlines top and bottom,
-     like a magazine project credit row. */
-  .project-detail__credit-strip {
+  /* Meta tile grid — small stone-toned boxes sit directly under the
+     project name so all the key details are visible immediately, no
+     scroll required. Each tile is its own card, not a row of values. */
+  .project-detail__meta {
     margin: 0 0 var(--space-l);
-    padding: var(--space-s) 0;
-    border-top: 1px solid var(--bone);
-    border-bottom: 1px solid var(--bone);
+    padding: 0;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: var(--space-m);
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: var(--space-s);
   }
 
-  .project-detail__credit-strip > div {
+  .project-detail__meta-tile {
+    background: var(--stone);
+    padding: var(--space-m);
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: var(--space-xs);
+    /* Subtle terracotta seam on the left of each tile — editorial
+       callout mark without being noisy. */
+    border-left: 2px solid var(--accent);
   }
 
-  .project-detail__credit-strip dt {
+  .project-detail__meta-tile dt {
     margin: 0;
   }
 
-  .project-detail__credit-strip dd {
+  .project-detail__meta-tile dd {
     margin: 0;
     font-family: var(--font-serif);
-    font-size: clamp(18px, 1.4vw, 22px);
+    font-size: clamp(18px, 1.4vw, 24px);
     font-weight: 400;
     color: var(--ink);
     letter-spacing: -0.01em;
     line-height: 1.2;
   }
 
-  /* Body — single focused reading column, no sidebar. */
-  .project-detail__body {
+  /* Lead paragraph (the card summary). Upright sans body-l, not italic
+     — reads as a clear intro line, not a flourish. */
+  .project-detail__lead {
     max-width: 720px;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-s);
-  }
-
-  .project-detail__body p {
-    font-size: var(--t-body-m);
+    margin: 0 0 var(--space-l);
+    font-size: var(--t-body-l);
     color: var(--ink);
     line-height: var(--lh-body);
   }
 
-  /* First paragraph reads as a lead — larger serif italic so it sets
-     the editorial tone for the article that follows. */
-  .project-detail__lead {
-    font-family: var(--font-serif);
-    font-size: clamp(20px, 1.7vw, 26px);
-    font-weight: 400;
-    font-style: italic;
-    line-height: 1.4;
-    letter-spacing: -0.015em;
-    color: var(--ink);
-    margin-bottom: var(--space-s);
+  /* Body sections — each rendered as its own warm stone box. Number
+     marker + heading at top, then paragraphs and any bullets. Gap
+     between boxes gives breathing room without crowding. */
+  .project-detail__sections {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-m);
+    max-width: 920px;
   }
 
-  /* Numbered editorial sections — number sits beside the heading as a
-     small serif marker, replacing the document-style flat h3 stack. */
   .project-detail__section {
-    margin-top: var(--space-l);
-    padding-top: var(--space-m);
-    border-top: 1px solid var(--bone);
+    background: var(--stone);
+    padding: var(--space-l);
     display: flex;
     flex-direction: column;
     gap: var(--space-s);
+  }
+
+  .project-detail__section--features {
+    margin-top: var(--space-m);
+    max-width: 920px;
   }
 
   .project-detail__section-head {
@@ -280,6 +274,13 @@ const meta = [
     margin: 0;
   }
 
+  .project-detail__section p {
+    font-size: var(--t-body-m);
+    color: var(--ink);
+    line-height: var(--lh-body);
+    max-width: 70ch;
+  }
+
   .project-detail__bullets {
     list-style: none;
     margin: var(--space-xs) 0 0;
@@ -287,6 +288,7 @@ const meta = [
     display: flex;
     flex-direction: column;
     gap: var(--space-xs);
+    max-width: 70ch;
   }
 
   .project-detail__bullets li {
@@ -307,10 +309,10 @@ const meta = [
     background: var(--accent);
   }
 
-  /* Gallery — 2-column grid (responsive), uniform 4:3 tiles. Replaces
-     the vertical stack so the page reads as compact, not a long scroll. */
+  /* Gallery — 2-column grid (responsive), uniform 4:3 tiles. Every 5th
+     tile spans wide for editorial rhythm. */
   .project-detail__gallery {
-    margin-top: var(--space-xl);
+    margin-top: var(--space-l);
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: var(--space-s);
@@ -337,8 +339,6 @@ const meta = [
     line-height: var(--lh-caption);
   }
 
-  /* Asymmetric accent: every third tile spans wide, so the grid reads
-     as an editorial spread rather than a uniform thumbnail wall. */
   @media (min-width: 720px) {
     .project-detail__gallery figure:nth-child(5n + 1) {
       grid-column: span 2;
@@ -387,8 +387,11 @@ const meta = [
       aspect-ratio: 4 / 3;
       max-height: 60vh;
     }
-    .project-detail__credit-strip {
+    .project-detail__meta {
       grid-template-columns: 1fr 1fr;
+    }
+    .project-detail__section {
+      padding: var(--space-m);
     }
     .project-detail__gallery {
       grid-template-columns: 1fr;
