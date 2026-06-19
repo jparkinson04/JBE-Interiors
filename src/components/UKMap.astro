@@ -116,6 +116,38 @@ const VB_H = 500;
   </figcaption>
 </figure>
 
+<script>
+  /* For pins whose dot is drawn inside the SVG (Jersey), measure the
+     SVG dot's actual rendered position and snap the invisible HTML
+     hover button onto it. Solves the small SVG/HTML coordinate
+     mismatch that was leaving the tooltip below the visible pin. */
+  const alignSvgDotPins = () => {
+    document.querySelectorAll<HTMLElement>('.ukmap__pin--svg-dot').forEach((pin) => {
+      const map = pin.closest<HTMLElement>('.ukmap');
+      if (!map) return;
+      const svgDot = map.querySelector<SVGElement>('.ukmap__jersey-dot');
+      if (!svgDot) return;
+
+      const dotBox = svgDot.getBoundingClientRect();
+      const mapBox = map.getBoundingClientRect();
+      if (mapBox.width === 0 || mapBox.height === 0) return;
+
+      const xPct = ((dotBox.left + dotBox.width / 2) - mapBox.left) / mapBox.width * 100;
+      const yPct = ((dotBox.top + dotBox.height / 2) - mapBox.top) / mapBox.height * 100;
+
+      pin.style.setProperty('--pin-x', `${xPct}%`);
+      pin.style.setProperty('--pin-y', `${yPct}%`);
+    });
+  };
+
+  if (document.readyState === 'complete') {
+    alignSvgDotPins();
+  } else {
+    window.addEventListener('load', alignSvgDotPins);
+  }
+  window.addEventListener('resize', alignSvgDotPins);
+</script>
+
 <style define:vars={{
   vbW: `${VB_W}`,
   vbH: `${VB_H}`,
