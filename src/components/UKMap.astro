@@ -14,89 +14,27 @@ interface Pin {
   /* Pre-projected viewBox coords (0–400 horizontal, 0–600 vertical) */
   x: number;
   y: number;
-  /* Tooltip lines */
+  /* Location label shown in the tooltip on hover */
   primary: string;
-  secondary: string[];
   /* Whether to flip the tooltip to the left so it doesn't clip the edge */
   flip?: 'left' | 'right';
 }
 
-/* Pins are sorted top-to-bottom (north-to-south) so their DOM order matches
-   their visual order, which makes the stagger animation read naturally.
-   Cities with multiple JBE projects (London, Glasgow) group them in one
-   tooltip — at this map scale Clydebank vs central Glasgow and St Pauls
-   vs Covent Garden read as the same point. */
+/* Eleven locations showing the spread of JBE's work across the UK,
+   Ireland, and Jersey. Sorted north-to-south so the DOM order matches
+   the visual sequence (drives the staggered pulse-ring rhythm). */
 const pins: Pin[] = [
-  {
-    x: 244.3,
-    y: 229.9,
-    primary: 'Dundee',
-    secondary: ["Nando's, Dundee"],
-  },
-  {
-    x: 205.0,
-    y: 258.0,
-    primary: 'Glasgow',
-    secondary: ["Nando's, Waterloo Street", "Nando's, Clydebank"],
-  },
-  {
-    x: 288.2,
-    y: 357.6,
-    primary: 'Leeds',
-    secondary: ["Nando's, Thorpe Park"],
-  },
-  {
-    x: 320.6,
-    y: 359.0,
-    primary: 'Hull',
-    secondary: ["Nando's, Hull"],
-    flip: 'left',
-  },
-  {
-    x: 252.0,
-    y: 359.6,
-    primary: 'Preston',
-    secondary: ['Wagamama, Preston'],
-  },
-  {
-    x: 287.6,
-    y: 377.8,
-    primary: 'Sheffield',
-    secondary: ['Wagamama, Sheffield'],
-  },
-  {
-    x: 247.7,
-    y: 379.7,
-    primary: 'Speke, Liverpool',
-    secondary: ["Nando's, Speke Liverpool"],
-  },
-  {
-    x: 295.4,
-    y: 389.3,
-    primary: 'East Midlands',
-    secondary: ['Wagamama, East Midlands'],
-  },
-  {
-    x: 337.7,
-    y: 424.8,
-    primary: 'Ely',
-    secondary: ["Nando's, Ely"],
-    flip: 'left',
-  },
-  {
-    x: 333.6,
-    y: 433.9,
-    primary: 'Cambridge',
-    secondary: ['Wagamama, Cambridge'],
-    flip: 'left',
-  },
-  {
-    x: 327.3,
-    y: 467.3,
-    primary: 'London',
-    secondary: ['Sunday in Brooklyn, James Street', 'Black Tap, Piccadilly'],
-    flip: 'left',
-  },
+  { x: 237.9, y: 254.2, primary: 'Edinburgh' },
+  { x: 283.4, y: 301.0, primary: 'Newcastle' },
+  { x: 158.6, y: 319.3, primary: 'Belfast' },
+  { x: 252.0, y: 359.5, primary: 'Preston' },
+  { x: 265.3, y: 372.9, primary: 'Manchester' },
+  { x: 297.5, y: 370.9, primary: 'Doncaster' },
+  { x: 296.7, y: 398.2, primary: 'Nottingham' },
+  { x: 367.7, y: 413.7, primary: 'Norwich', flip: 'left' },
+  { x: 275.5, y: 420.7, primary: 'Birmingham' },
+  { x: 326.5, y: 467.6, primary: 'London', flip: 'left' },
+  { x: 269.4, y: 578.4, primary: 'Jersey' },
 ];
 
 /* viewBox display crops vertical empty space (Shetland Islands aren't in
@@ -107,7 +45,7 @@ const VB_W = 400;
 const VB_H = 500;
 ---
 
-<figure class="ukmap" aria-label="Map of completed JBE Interiors projects across the British Isles">
+<figure class="ukmap" aria-label="Map of locations across the UK, Ireland, and Jersey where JBE Interiors has delivered work">
   <svg
     class="ukmap__svg"
     viewBox={`${VB_X} ${VB_Y} ${VB_W} ${VB_H}`}
@@ -142,14 +80,11 @@ const VB_H = 500;
           class={`ukmap__pin${flipClass}`}
           style={`--pin-x: ${xPct}%; --pin-y: ${yPct}%;`}
         >
-          <button class="ukmap__pin-button" type="button" aria-label={`${pin.primary} — ${pin.secondary.join(', ')}`}>
+          <button class="ukmap__pin-button" type="button" aria-label={pin.primary}>
             <span class="ukmap__pin-dot" aria-hidden="true"></span>
             <span class="ukmap__pin-pulse" aria-hidden="true"></span>
             <span class="ukmap__tooltip" role="tooltip">
               <span class="ukmap__tooltip-loc">{pin.primary}</span>
-              {pin.secondary.map((s) => (
-                <span class="ukmap__tooltip-name">{s}</span>
-              ))}
             </span>
           </button>
         </li>
@@ -317,8 +252,7 @@ const VB_H = 500;
     transform: translateX(-50%) translateY(4px);
     background: var(--ink);
     color: var(--paper);
-    padding: 10px 14px;
-    min-width: 180px;
+    padding: 6px 12px;
     display: flex;
     flex-direction: column;
     gap: 2px;
