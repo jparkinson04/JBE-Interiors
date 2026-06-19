@@ -67,10 +67,11 @@ const VB_H = 500;
     <path class="ukmap__land" d={UK_PATH} />
     <path class="ukmap__land" d={IRELAND_PATH} />
 
-    {/* Jersey island — drawn as a small horizontal ellipse (Jersey is
-        wider than tall in real life). Pin sits centred inside it. */}
-    <ellipse class="ukmap__jersey" cx="269.4" cy="578.4" rx="10" ry="6" />
-    <text x="284" y="582" class="ukmap__jersey-label">JERSEY</text>
+    {/* Jersey island — horizontal ellipse big enough that the 14px
+        pin (dot + halo) sits comfortably inside it. Drawn larger than
+        true scale (Jersey would be sub-pixel at this map scale). */}
+    <ellipse class="ukmap__jersey" cx="269.4" cy="578.4" rx="16" ry="10" />
+    <text x="292" y="582" class="ukmap__jersey-label">JERSEY</text>
 
     {/* Country labels in stone-coloured uppercase for orientation */}
     <text x="220" y="200" class="ukmap__country-label">UK</text>
