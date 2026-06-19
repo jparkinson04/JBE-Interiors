@@ -20,19 +20,30 @@ interface Pin {
   flip?: 'left' | 'right';
 }
 
-/* Eleven locations showing the spread of JBE's work across the UK,
-   Ireland, and Jersey. Sorted north-to-south so the DOM order matches
-   the visual sequence (drives the staggered pulse-ring rhythm). */
+/* Every location JBE Interiors has been mentioned working in.
+   Sorted north-to-south so the DOM order matches the visual
+   sequence (drives the staggered pulse-ring rhythm).
+   Pins on the right-hand side of the map flip their tooltip to the
+   left so it doesn't clip the panel edge. */
 const pins: Pin[] = [
+  { x: 244.2, y: 229.8, primary: 'Dundee' },
   { x: 237.9, y: 254.2, primary: 'Edinburgh' },
+  { x: 207.2, y: 258.5, primary: 'Glasgow' },
   { x: 283.4, y: 301.0, primary: 'Newcastle' },
   { x: 158.6, y: 319.3, primary: 'Belfast' },
+  { x: 288.1, y: 357.7, primary: 'Leeds' },
+  { x: 320.7, y: 359.2, primary: 'Hull', flip: 'left' },
   { x: 252.0, y: 359.5, primary: 'Preston' },
-  { x: 265.3, y: 372.9, primary: 'Manchester' },
   { x: 297.5, y: 370.9, primary: 'Doncaster' },
+  { x: 265.3, y: 372.9, primary: 'Manchester' },
+  { x: 287.6, y: 377.7, primary: 'Sheffield' },
+  { x: 247.7, y: 379.7, primary: 'Liverpool' },
+  { x: 295.5, y: 389.0, primary: 'Mansfield' },
   { x: 296.7, y: 398.2, primary: 'Nottingham' },
   { x: 367.7, y: 413.7, primary: 'Norwich', flip: 'left' },
   { x: 275.5, y: 420.7, primary: 'Birmingham' },
+  { x: 337.7, y: 424.8, primary: 'Ely', flip: 'left' },
+  { x: 333.7, y: 434.1, primary: 'Cambridge', flip: 'left' },
   { x: 326.5, y: 467.6, primary: 'London', flip: 'left' },
   { x: 269.4, y: 578.4, primary: 'Jersey' },
 ];
@@ -56,11 +67,9 @@ const VB_H = 500;
     <path class="ukmap__land" d={UK_PATH} />
     <path class="ukmap__land" d={IRELAND_PATH} />
 
-    {/* Jersey — not in the Natural Earth 110m dataset, added manually */}
-    <g class="ukmap__jersey">
-      <circle cx="269.4" cy="578.4" r="3.5" />
-      <text x="278" y="582" class="ukmap__jersey-label">JERSEY</text>
-    </g>
+    {/* Jersey label — pin (below) provides the marker itself, since
+        the island is too small to draw at this map scale. */}
+    <text x="278" y="582" class="ukmap__jersey-label">JERSEY</text>
 
     {/* Country labels in stone-coloured uppercase for orientation */}
     <text x="220" y="200" class="ukmap__country-label">UK</text>
@@ -124,12 +133,6 @@ const VB_H = 500;
     stroke: color-mix(in srgb, var(--accent) 50%, var(--slate));
     stroke-width: 0.6;
     stroke-linejoin: round;
-  }
-
-  .ukmap__jersey circle {
-    fill: var(--stone);
-    stroke: color-mix(in srgb, var(--accent) 50%, var(--slate));
-    stroke-width: 0.6;
   }
 
   .ukmap__jersey-label,
@@ -205,16 +208,25 @@ const VB_H = 500;
     .ukmap__pin-pulse {
       animation: ukmap-pulse 3s ease-out infinite;
     }
-    .ukmap__pin:nth-child(2)  .ukmap__pin-pulse { animation-delay: 0.3s; }
-    .ukmap__pin:nth-child(3)  .ukmap__pin-pulse { animation-delay: 0.6s; }
-    .ukmap__pin:nth-child(4)  .ukmap__pin-pulse { animation-delay: 0.9s; }
-    .ukmap__pin:nth-child(5)  .ukmap__pin-pulse { animation-delay: 1.2s; }
-    .ukmap__pin:nth-child(6)  .ukmap__pin-pulse { animation-delay: 1.5s; }
-    .ukmap__pin:nth-child(7)  .ukmap__pin-pulse { animation-delay: 1.8s; }
-    .ukmap__pin:nth-child(8)  .ukmap__pin-pulse { animation-delay: 2.1s; }
-    .ukmap__pin:nth-child(9)  .ukmap__pin-pulse { animation-delay: 2.4s; }
-    .ukmap__pin:nth-child(10) .ukmap__pin-pulse { animation-delay: 2.7s; }
-    .ukmap__pin:nth-child(11) .ukmap__pin-pulse { animation-delay: 3.0s; }
+    .ukmap__pin:nth-child(2)  .ukmap__pin-pulse { animation-delay: 0.15s; }
+    .ukmap__pin:nth-child(3)  .ukmap__pin-pulse { animation-delay: 0.30s; }
+    .ukmap__pin:nth-child(4)  .ukmap__pin-pulse { animation-delay: 0.45s; }
+    .ukmap__pin:nth-child(5)  .ukmap__pin-pulse { animation-delay: 0.60s; }
+    .ukmap__pin:nth-child(6)  .ukmap__pin-pulse { animation-delay: 0.75s; }
+    .ukmap__pin:nth-child(7)  .ukmap__pin-pulse { animation-delay: 0.90s; }
+    .ukmap__pin:nth-child(8)  .ukmap__pin-pulse { animation-delay: 1.05s; }
+    .ukmap__pin:nth-child(9)  .ukmap__pin-pulse { animation-delay: 1.20s; }
+    .ukmap__pin:nth-child(10) .ukmap__pin-pulse { animation-delay: 1.35s; }
+    .ukmap__pin:nth-child(11) .ukmap__pin-pulse { animation-delay: 1.50s; }
+    .ukmap__pin:nth-child(12) .ukmap__pin-pulse { animation-delay: 1.65s; }
+    .ukmap__pin:nth-child(13) .ukmap__pin-pulse { animation-delay: 1.80s; }
+    .ukmap__pin:nth-child(14) .ukmap__pin-pulse { animation-delay: 1.95s; }
+    .ukmap__pin:nth-child(15) .ukmap__pin-pulse { animation-delay: 2.10s; }
+    .ukmap__pin:nth-child(16) .ukmap__pin-pulse { animation-delay: 2.25s; }
+    .ukmap__pin:nth-child(17) .ukmap__pin-pulse { animation-delay: 2.40s; }
+    .ukmap__pin:nth-child(18) .ukmap__pin-pulse { animation-delay: 2.55s; }
+    .ukmap__pin:nth-child(19) .ukmap__pin-pulse { animation-delay: 2.70s; }
+    .ukmap__pin:nth-child(20) .ukmap__pin-pulse { animation-delay: 2.85s; }
 
     .ukmap__pin-dot,
     .ukmap__tooltip {
