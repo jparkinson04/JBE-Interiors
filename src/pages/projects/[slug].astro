@@ -402,11 +402,25 @@ const meta = [
     }
     .project-detail__nav-link--next {
       text-align: left;
-      align-items: flex-start;
+      align-items: flex-end;
     }
     .project-detail__nav-link--index {
       text-align: left;
       align-items: flex-start;
+    }
+  }
+
+  /* Narrow mobile: 2-col meta tiles squish addresses awkwardly.
+     Drop to a single column so values read cleanly. */
+  @media (max-width: 480px) {
+    .project-detail__meta {
+      grid-template-columns: 1fr;
+    }
+    .project-detail__container {
+      padding-top: var(--space-m);
+    }
+    .project-detail__header {
+      margin-bottom: var(--space-s);
     }
   }
 </style>

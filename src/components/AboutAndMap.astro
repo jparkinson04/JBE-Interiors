@@ -153,10 +153,6 @@ import UKMap from './UKMap.astro';
   }
 
   @media (max-width: 900px) {
-    .about-map__meta {
-      grid-template-columns: 1fr;
-      gap: var(--space-s);
-    }
     .about-map__grid {
       grid-template-columns: 1fr;
       gap: var(--space-xl);
@@ -164,6 +160,18 @@ import UKMap from './UKMap.astro';
     }
     .about-map__map {
       justify-content: center;
+    }
+  }
+
+  /* Stats boxes: keep 3 across until the screen is too narrow for the
+     content; then drop to a single stacked column. */
+  @media (max-width: 560px) {
+    .about-map__meta {
+      grid-template-columns: 1fr;
+      gap: var(--space-s);
+    }
+    .about-map__meta-tile {
+      padding: var(--space-s) var(--space-m);
     }
   }
 </style>
