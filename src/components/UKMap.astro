@@ -67,9 +67,10 @@ const VB_H = 500;
     <path class="ukmap__land" d={UK_PATH} />
     <path class="ukmap__land" d={IRELAND_PATH} />
 
-    {/* Jersey label — pin (below) provides the marker itself, since
-        the island is too small to draw at this map scale. */}
-    <text x="278" y="582" class="ukmap__jersey-label">JERSEY</text>
+    {/* Jersey island — drawn as a small horizontal ellipse (Jersey is
+        wider than tall in real life). Pin sits centred inside it. */}
+    <ellipse class="ukmap__jersey" cx="269.4" cy="578.4" rx="10" ry="6" />
+    <text x="284" y="582" class="ukmap__jersey-label">JERSEY</text>
 
     {/* Country labels in stone-coloured uppercase for orientation */}
     <text x="220" y="200" class="ukmap__country-label">UK</text>
@@ -133,6 +134,12 @@ const VB_H = 500;
     stroke: color-mix(in srgb, var(--accent) 50%, var(--slate));
     stroke-width: 0.6;
     stroke-linejoin: round;
+  }
+
+  .ukmap__jersey {
+    fill: var(--stone);
+    stroke: color-mix(in srgb, var(--accent) 50%, var(--slate));
+    stroke-width: 0.6;
   }
 
   .ukmap__jersey-label,
