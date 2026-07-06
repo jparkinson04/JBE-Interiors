@@ -1,5 +1,6 @@
 ---
 const { pathname } = Astro.url;
+const isHome = pathname === '/';
 const isWork = pathname === '/projects' || pathname.startsWith('/projects/');
 const isContact = pathname === '/contact' || pathname.startsWith('/contact/');
 ---
@@ -17,6 +18,7 @@ const isContact = pathname === '/contact' || pathname.startsWith('/contact/');
     </a>
 
     <nav class="site-header__nav" aria-label="Primary">
+      <a href="/" class:list={["nav-link", { "is-active": isHome }]}>Home</a>
       <a href="/projects" class:list={["nav-link", { "is-active": isWork }]}>Projects</a>
       <a href="/contact" class:list={["nav-link", { "is-active": isContact }]}>Contact</a>
     </nav>

@@ -15,5 +15,4 @@ gallery:
   - image: "/images/projects/club-house-meadowhall/gallery-3.jpg"
   - image: "/images/projects/club-house-meadowhall/gallery-4.jpg"
   - image: "/images/projects/club-house-meadowhall/gallery-5.jpg"
-  - image: "/images/projects/club-house-meadowhall/gallery-6.jpg"
 ---

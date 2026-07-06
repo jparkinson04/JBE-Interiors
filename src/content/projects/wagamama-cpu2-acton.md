@@ -19,7 +19,6 @@ sections:
       - "To support their growing operations, Wagamama expanded their existing Acton-based CPU by acquiring an additional facility. This new space was designed to serve as a high-capacity storage hub and modern office suite."
 gallery:
   - image: "/images/projects/wagamama-cpu2-acton/gallery-1.jpg"
-  - image: "/images/projects/wagamama-cpu2-acton/gallery-2.jpg"
   - image: "/images/projects/wagamama-cpu2-acton/gallery-3.jpg"
   - image: "/images/projects/wagamama-cpu2-acton/gallery-4.jpg"
 ---

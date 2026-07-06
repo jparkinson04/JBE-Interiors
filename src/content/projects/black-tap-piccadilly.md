@@ -27,7 +27,6 @@ gallery:
   - image: "/images/projects/black-tap-piccadilly/gallery-3.jpg"
   - image: "/images/projects/black-tap-piccadilly/gallery-4.jpg"
   - image: "/images/projects/black-tap-piccadilly/gallery-7.jpg"
-  - image: "/images/projects/black-tap-piccadilly/gallery-1.jpg"
   - image: "/images/projects/black-tap-piccadilly/gallery-2.jpg"
   - image: "/images/projects/black-tap-piccadilly/gallery-8.jpg"
 ---
