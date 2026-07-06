@@ -41,7 +41,6 @@ const placeholderPosts: Post[] = [
 
 const { posts = placeholderPosts } = Astro.props;
 const displayPosts = posts.slice(0, 4);
-const isPlaceholder = posts === placeholderPosts;
 ---
 
 <section class="ig-feed" aria-label="Latest from Instagram">
@@ -83,11 +82,6 @@ const isPlaceholder = posts === placeholderPosts;
       </a>
     </p>
 
-    {isPlaceholder && (
-      <p class="ig-feed__placeholder-note" aria-live="polite">
-        Showing placeholder tiles &mdash; live feed not yet connected.
-      </p>
-    )}
   </div>
 </section>
 
@@ -216,13 +210,6 @@ const isPlaceholder = posts === placeholderPosts;
     border-bottom-color: var(--accent);
   }
 
-  .ig-feed__placeholder-note {
-    margin-top: var(--space-m);
-    text-align: center;
-    font-size: var(--t-caption);
-    color: var(--slate);
-    font-style: italic;
-  }
 
   @media (max-width: 768px) {
     .ig-feed__grid {
