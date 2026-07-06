@@ -24,6 +24,9 @@ pnpm-debug.log*
 .idea/
 .vercel
 
+# local Claude Code settings
+.claude/
+
 # Source assets dropped at the project root for processing
 # (kept locally so we can re-process; final web-ready versions live in /public/)
 /*.jpg
