@@ -35,6 +35,10 @@ pnpm-debug.log*
 /*.html
 /*_files/
 
+# Client-supplied logo source files
+/New logo*
+/New Logo*
+
 # Client-supplied project photo folders at the project root.
 # Originals stay locally; processed copies live in /public/images/projects/.
 /Sunday in Brooklyn, James Street/

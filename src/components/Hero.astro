@@ -46,10 +46,10 @@ const totalSeconds = slides.length * cycleSeconds;
   <div class="hero__content">
     <img
       class="hero__wordmark"
-      src="/assets/jbe-logo-light.png"
+      src="/assets/jbe-badge.jpg"
       alt="JBE Interiors"
-      width="216"
-      height="140"
+      width="447"
+      height="447"
     />
   </div>
 </section>
@@ -112,23 +112,26 @@ const totalSeconds = slides.length * cycleSeconds;
     padding: var(--header-height) var(--grid-margin) 0;
   }
 
+  /* Square badge sits as a signature moment over the hero photo.
+     Larger than the old wide wordmark so it still carries visual
+     weight now that the aspect is 1:1 rather than ~3:2. */
   .hero__wordmark {
     width: auto;
-    height: 112px;
-    max-width: min(420px, 70vw);
+    height: 200px;
+    max-width: min(320px, 60vw);
     object-fit: contain;
-    filter: drop-shadow(0 2px 24px rgba(0, 0, 0, 0.35));
+    filter: drop-shadow(0 8px 40px rgba(0, 0, 0, 0.5));
   }
 
   @media (max-width: 1024px) {
     .hero__wordmark {
-      height: 96px;
+      height: 168px;
     }
   }
 
   @media (max-width: 640px) {
     .hero__wordmark {
-      height: 72px;
+      height: 128px;
     }
   }
 
