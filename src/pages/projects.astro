@@ -5,23 +5,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 const projects = (await getCollection('projects')).sort(
   (a, b) => a.data.order - b.data.order
 );
-
-/* Each card shows three images — hero + first two gallery entries —
-   with a small pair of arrow buttons in the bottom-right of the image.
-   No auto-rotation; visitors flick through at their own pace. */
-const SLIDES_PER_CARD = 3;
-
-function cardSlides(hero: string, gallery: { image: string }[]): string[] {
-  const slides = [hero, ...gallery.map((g) => g.image)];
-  return slides.slice(0, SLIDES_PER_CARD);
-}
 ---
 
 <BaseLayout title="Projects — JBE Interiors">
   <section class="projects-page__intro">
     <div class="projects-page__intro-inner">
       <p class="eyebrow">Projects</p>
-      <h1>Recent work.</h1>
+      <h1>Our work.</h1>
       <p class="projects-page__lead">
         A curated selection of recent restaurant and retail fit-outs.
         Delivered nationwide for national chains, hospitality groups, and
@@ -33,56 +23,26 @@ function cardSlides(hero: string, gallery: { image: string }[]): string[] {
   <section class="projects-page__list" aria-label="Projects">
     <div class="projects-page__list-inner">
       <ul class="projects-page__grid" role="list">
-        {projects.map((project, i) => {
-          const slides = cardSlides(project.data.hero_image, project.data.gallery);
-          return (
-            <li class="project-card" data-card>
-              <a href={`/projects/${project.data.slug}`} class="project-card__link">
-                <figure class="project-card__media">
-                  {slides.map((src, slideIdx) => (
-                    <img
-                      class={`project-card__slide${slideIdx === 0 ? ' is-active' : ''}`}
-                      src={src}
-                      alt={slideIdx === 0 ? `${project.data.name} — interior view` : ''}
-                      loading={i < 2 && slideIdx === 0 ? 'eager' : 'lazy'}
-                      fetchpriority={i === 0 && slideIdx === 0 ? 'high' : 'auto'}
-                      decoding="async"
-                    />
-                  ))}
-                </figure>
-                <div class="project-card__body">
-                  <h2 class="project-card__name">{project.data.name}</h2>
-                  <p class="project-card__location">{project.data.location}</p>
-                </div>
-              </a>
-
-              {slides.length > 1 && (
-                <div class="project-card__controls" aria-hidden="false">
-                  <button
-                    type="button"
-                    class="project-card__nav-btn project-card__nav-btn--prev"
-                    data-nav="prev"
-                    aria-label={`Previous image for ${project.data.name}`}
-                  >
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                      <path d="M15 6 9 12l6 6" />
-                    </svg>
-                  </button>
-                  <button
-                    type="button"
-                    class="project-card__nav-btn project-card__nav-btn--next"
-                    data-nav="next"
-                    aria-label={`Next image for ${project.data.name}`}
-                  >
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                      <path d="M9 6 15 12l-6 6" />
-                    </svg>
-                  </button>
-                </div>
-              )}
-            </li>
-          );
-        })}
+        {projects.map((project, i) => (
+          <li class="project-card">
+            <a href={`/projects/${project.data.slug}`} class="project-card__link">
+              <figure class="project-card__media">
+                <img
+                  src={project.data.hero_image}
+                  alt={`${project.data.name} — interior view`}
+                  loading={i < 2 ? 'eager' : 'lazy'}
+                  fetchpriority={i === 0 ? 'high' : 'auto'}
+                  decoding="async"
+                />
+              </figure>
+              <div class="project-card__body">
+                <h2 class="project-card__name">{project.data.name}</h2>
+                <p class="project-card__location">{project.data.location}</p>
+                <span class="project-card__cta">Click here for more information &rarr;</span>
+              </div>
+            </a>
+          </li>
+        ))}
       </ul>
     </div>
   </section>
@@ -97,35 +57,6 @@ function cardSlides(hero: string, gallery: { image: string }[]): string[] {
     </div>
   </section>
 </BaseLayout>
-
-<script>
-  /* Manual flick-through for each project card. No auto-cycle —
-     visitors advance the carousel via the arrow buttons. Counter
-     updates so visitors know how many shots remain. */
-  document.querySelectorAll<HTMLElement>('[data-card]').forEach((card) => {
-    const slides = card.querySelectorAll<HTMLElement>('.project-card__slide');
-    const prev = card.querySelector<HTMLButtonElement>('[data-nav="prev"]');
-    const next = card.querySelector<HTMLButtonElement>('[data-nav="next"]');
-    if (slides.length < 2 || !prev || !next) return;
-
-    let active = 0;
-    const show = (i: number) => {
-      active = (i + slides.length) % slides.length;
-      slides.forEach((slide, idx) => slide.classList.toggle('is-active', idx === active));
-    };
-
-    prev.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      show(active - 1);
-    });
-    next.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      show(active + 1);
-    });
-  });
-</script>
 
 <style>
   .projects-page__intro {
@@ -192,85 +123,24 @@ function cardSlides(hero: string, gallery: { image: string }[]): string[] {
     aspect-ratio: 4 / 3;
     overflow: hidden;
     background: var(--stone);
-    position: relative;
   }
 
-  .project-card__slide {
-    position: absolute;
-    inset: 0;
+  .project-card__media img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: center;
     display: block;
-    opacity: 0;
-    will-change: opacity;
   }
 
   @media (prefers-reduced-motion: no-preference) {
-    .project-card__slide {
-      transition: opacity 400ms var(--ease-out);
+    .project-card__media img {
+      transition: transform 600ms var(--ease-out);
     }
-  }
-
-  .project-card__slide.is-active {
-    opacity: 1;
-  }
-
-  /* Slide controls — arrow buttons vertically centred on the image's
-     left and right edges. Counter dropped: keeps the image clean and
-     it's obvious the arrows cycle the photos. */
-  .project-card__controls {
-    position: absolute;
-    /* Anchor to the image only; the wrapper itself is pointer-transparent. */
-    top: 0;
-    left: 0;
-    right: 0;
-    /* Bottom shy of the body section so arrows don't drift onto text. */
-    bottom: calc(var(--space-s) + var(--space-xs));
-    pointer-events: none;
-  }
-
-  .project-card__nav-btn {
-    pointer-events: auto;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 40px;
-    height: 40px;
-    /* Solid paper background instead of a semi-transparent
-       backdrop-filter blur — much cheaper for the browser to paint on
-       scroll, especially with 8 buttons across the grid. */
-    background: var(--paper);
-    color: var(--ink);
-    border: 0;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-  }
-
-  .project-card__nav-btn--prev {
-    left: var(--space-s);
-  }
-
-  .project-card__nav-btn--next {
-    right: var(--space-s);
-  }
-
-  @media (prefers-reduced-motion: no-preference) {
-    .project-card__nav-btn {
-      transition:
-        background-color var(--motion-fast) ease,
-        color var(--motion-fast) ease;
+    .project-card__link:hover .project-card__media img,
+    .project-card__link:focus-visible .project-card__media img {
+      transform: scale(1.02);
     }
-  }
-
-  .project-card__nav-btn:hover,
-  .project-card__nav-btn:focus-visible {
-    background: var(--ink);
-    color: var(--paper);
   }
 
   .project-card__body {
@@ -296,6 +166,25 @@ function cardSlides(hero: string, gallery: { image: string }[]): string[] {
   .project-card__location {
     font-size: var(--t-body-m);
     color: var(--slate);
+  }
+
+  /* Explicit CTA replacing the flick-through arrows. */
+  .project-card__cta {
+    margin-top: var(--space-xs);
+    align-self: flex-start;
+    font-size: var(--t-body-s);
+    font-weight: 500;
+    letter-spacing: var(--ls-button);
+    text-transform: uppercase;
+    color: var(--ink);
+    border-bottom: 1px solid var(--bone);
+    padding-bottom: 2px;
+  }
+
+  .project-card__link:hover .project-card__cta,
+  .project-card__link:focus-visible .project-card__cta {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
   }
 
   .projects-page__more {
@@ -324,13 +213,6 @@ function cardSlides(hero: string, gallery: { image: string }[]): string[] {
     .projects-page__grid {
       grid-template-columns: 1fr;
       row-gap: var(--space-m);
-    }
-    /* Slightly smaller arrow buttons on mobile so they don't dominate
-       the (now wider) hero image. Still well over the touch-target
-       minimum. */
-    .project-card__nav-btn {
-      width: 36px;
-      height: 36px;
     }
   }
 </style>
