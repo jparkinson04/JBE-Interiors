@@ -69,11 +69,11 @@
      fallback, then a system safety net. Swap to Söhne when licensed. */
   --font-sans: 'Söhne', 'Geist', 'Neue Haas Grotesk', 'Helvetica Neue', system-ui, sans-serif;
 
-  /* Display serif — Fraunces, a contemporary editorial serif with an
-     optical-size axis. Light weights at display sizes read premium and
-     distinctive rather than default-templatey. Used for h1/h2 and a
-     few display-sized accents; body and UI stay on the sans stack. */
-  --font-serif: 'Fraunces', 'Cormorant Garamond', Georgia, serif;
+  /* Display serif — Marcellus, an inscriptional Roman with clean,
+     straight-cut letterforms (single weight, no italic). Luxury-brand
+     staple; reads sleek rather than curvy at display sizes. Used for
+     h1/h2 and display accents; body and UI stay on the sans stack. */
+  --font-serif: 'Marcellus', Georgia, serif;
 }
 
 @media (max-width: 1024px) {
@@ -160,9 +160,8 @@ button {
 }
 
 /* Typography defaults — display headings set in the editorial serif.
-   h2-h6 use weight 400 (more presence at section-level sizes); h1 and
-   any explicit display-l/xl elements drop to hairline 300 for the
-   editorial-magazine feel at large sizes. */
+   Marcellus ships a single 400 weight; the size scale carries the
+   hierarchy instead of weight changes. */
 h1, h2, h3, h4, h5, h6 {
   margin: 0;
   font-family: var(--font-serif);
@@ -174,8 +173,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1, .display-l, .display-xl {
-  font-weight: 300;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.01em;
 }
 
 p {
