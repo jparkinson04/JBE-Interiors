@@ -49,15 +49,6 @@ const projects = (await getCollection('projects')).sort(
     </div>
   </section>
 
-  <section class="projects-page__more">
-    <div class="projects-page__more-inner">
-      <p class="eyebrow">More</p>
-      <p class="projects-page__more-text">
-        Selected projects shown. The full portfolio is available on request.
-      </p>
-      <a href="/contact" class="btn btn--secondary">Get in touch</a>
-    </div>
-  </section>
 </BaseLayout>
 
 <script>
@@ -216,27 +207,6 @@ const projects = (await getCollection('projects')).sort(
     border-bottom-color: var(--accent);
   }
 
-  .projects-page__more {
-    background: var(--paper);
-    padding-block: var(--space-l);
-    border-top: 1px solid var(--bone);
-  }
-
-  .projects-page__more-inner {
-    max-width: var(--grid-max);
-    margin-inline: auto;
-    padding-inline: var(--grid-margin);
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--space-m);
-  }
-
-  .projects-page__more-text {
-    font-size: var(--t-body-l);
-    color: var(--ink);
-    max-width: 52ch;
-  }
 
   @media (max-width: 720px) {
     .projects-page__grid {
