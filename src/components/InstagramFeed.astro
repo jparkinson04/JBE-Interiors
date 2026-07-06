@@ -46,15 +46,15 @@ const isPlaceholder = posts === placeholderPosts;
 
 <section class="ig-feed" aria-label="Latest from Instagram">
   <div class="ig-feed__container">
-    <header class="ig-feed__header">
+    <header class="ig-feed__header reveal">
       <span class="section-mark" aria-hidden="true"></span>
       <p class="eyebrow">On Instagram</p>
       <h2 class="ig-feed__heading">Latest from <span class="ig-feed__handle">@jbeinteriorsltd</span>.</h2>
     </header>
 
     <ul class="ig-feed__grid" role="list">
-      {displayPosts.map((post) => (
-        <li class="ig-feed__tile">
+      {displayPosts.map((post, i) => (
+        <li class={`ig-feed__tile reveal${i > 0 ? ` reveal--d${Math.min(i, 3)}` : ''}`}>
           <a
             href={post.permalink}
             target="_blank"

@@ -48,6 +48,27 @@ const { title, description = 'JBE Interiors — restaurant and retail fit-outs a
     </style>
 
     <script>
+      /* Scroll reveals: flag .reveal elements the first time they enter
+         the viewport. CSS (global.css) handles the actual animation and
+         the prefers-reduced-motion opt-out. */
+      const revealables = document.querySelectorAll('.reveal');
+      if (revealables.length) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-revealed');
+                io.unobserve(entry.target);
+              }
+            }
+          },
+          { threshold: 0.15 }
+        );
+        revealables.forEach((el) => io.observe(el));
+      }
+    </script>
+
+    <script>
       import Lenis from 'lenis';
 
       /* Inertial smooth-scroll. Skipped for visitors who've opted into

@@ -1,22 +1,22 @@
 ---
 /* About section — stats tiles above a two-column editorial block:
-   copy + CTA on the left, a photograph with an offset brand-grey
-   frame on the right. (The UK map that used to sit here was removed
-   at Jason's request, July 2026.) */
+   copy + CTA on the left, an arch-masked photograph with an offset
+   arch outline on the right. Elements carry .reveal classes so they
+   float in on scroll (observer in BaseLayout, styles in global.css). */
 ---
 
 <section class="about-map" aria-label="About JBE Interiors">
   <div class="about-map__inner">
     <dl class="about-map__meta">
-      <div class="about-map__meta-tile">
+      <div class="about-map__meta-tile reveal">
         <dt class="eyebrow">Incorporated</dt>
         <dd>04/08/2017</dd>
       </div>
-      <div class="about-map__meta-tile">
+      <div class="about-map__meta-tile reveal reveal--d1">
         <dt class="eyebrow">Based</dt>
         <dd>Doncaster</dd>
       </div>
-      <div class="about-map__meta-tile">
+      <div class="about-map__meta-tile reveal reveal--d2">
         <dt class="eyebrow">Coverage</dt>
         <dd>UK, Ireland, Jersey</dd>
       </div>
@@ -24,14 +24,14 @@
 
     <div class="about-map__grid">
       <div class="about-map__copy">
-        <header class="about-map__header">
+        <header class="about-map__header reveal">
           <p class="eyebrow">About</p>
           <h2 class="about-map__heading">
             Restaurant and retail fit&#8209;outs, from concept to handover.
           </h2>
         </header>
 
-        <div class="about-map__body">
+        <div class="about-map__body reveal reveal--d1">
           <p>
             JBE Interiors delivers complete fit-out programmes for restaurant
             and retail brands across the UK, Ireland, and Jersey. We work
@@ -50,10 +50,10 @@
           </p>
         </div>
 
-        <a href="/projects" class="about-map__cta">View our work &rarr;</a>
+        <a href="/projects" class="about-map__cta reveal reveal--d2">View our work &rarr;</a>
       </div>
 
-      <figure class="about-map__figure">
+      <figure class="about-map__figure reveal reveal--img reveal--d1">
         <img
           src="/images/projects/nandos-waterloo-glasgow/hero.jpg"
           alt="Nando's Waterloo Street, Glasgow — dining room beneath suspended copper-ring ceiling installations."
@@ -108,17 +108,17 @@
   .about-map__meta-tile dd {
     margin: 0;
     font-family: var(--font-serif);
-    font-weight: 300;
+    font-weight: 400;
     font-size: clamp(24px, 2vw, 32px);
     letter-spacing: -0.01em;
     line-height: 1.1;
     color: var(--ink);
   }
 
-  /* Editorial split: copy column left, photograph right. */
+  /* Editorial split: copy column left, arched photograph right. */
   .about-map__grid {
     display: grid;
-    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
     gap: var(--space-xl);
     align-items: center;
   }
@@ -174,20 +174,25 @@
     border-bottom-color: var(--accent);
   }
 
-  /* Photograph with an offset brand-grey frame behind it — gives the
-     section depth without adding noise. Caption chip sits over the
-     bottom-left of the image. */
+  /* Arch-masked photograph with an offset arch outline behind it —
+     the interiors-brand signature shape. Caption chip sits on the
+     straight bottom edge. */
   .about-map__figure {
     margin: 0;
     position: relative;
+    max-width: 440px;
+    justify-self: center;
   }
 
   .about-map__figure::before {
     content: '';
     position: absolute;
-    inset: var(--space-s) calc(-1 * var(--space-s)) calc(-1 * var(--space-s)) var(--space-s);
-    background: var(--brand-grey);
+    inset: 0;
+    transform: translate(var(--space-s), var(--space-s));
+    border: 1px solid var(--brand-grey);
+    border-radius: 999px 999px 0 0;
     z-index: 0;
+    pointer-events: none;
   }
 
   .about-map__figure img {
@@ -195,16 +200,19 @@
     z-index: 1;
     width: 100%;
     height: auto;
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 4 / 5;
     object-fit: cover;
     display: block;
+    border-radius: 999px 999px 0 0;
   }
 
   .about-map__figure-caption {
     position: absolute;
     z-index: 2;
     bottom: var(--space-s);
-    left: var(--space-s);
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
     font-size: var(--t-eyebrow);
     font-weight: 500;
     letter-spacing: var(--ls-eyebrow);
@@ -220,8 +228,10 @@
       gap: var(--space-l);
       align-items: start;
     }
-    /* Keep the offset frame inside the viewport on small screens. */
     .about-map__figure {
+      justify-self: center;
+      max-width: 380px;
+      /* Keep the offset outline inside the viewport. */
       margin-right: var(--space-s);
     }
   }
