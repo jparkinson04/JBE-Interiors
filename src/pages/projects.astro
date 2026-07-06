@@ -24,7 +24,7 @@ const projects = (await getCollection('projects')).sort(
     <div class="projects-page__list-inner">
       <ul class="projects-page__grid" role="list">
         {projects.map((project, i) => (
-          <li class="project-card">
+          <li class={`project-card reveal${i % 2 === 1 ? ' reveal--d1' : ''}`}>
             <a href={`/projects/${project.data.slug}`} class="project-card__link">
               <figure class="project-card__media">
                 <img
@@ -50,7 +50,7 @@ const projects = (await getCollection('projects')).sort(
   </section>
 
   <section class="projects-page__more">
-    <div class="projects-page__more-inner">
+    <div class="projects-page__more-inner reveal">
       <p class="eyebrow">More</p>
       <p class="projects-page__more-text">
         Selected projects shown. The full portfolio is available on request.
