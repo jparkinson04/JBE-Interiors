@@ -331,6 +331,22 @@ const meta = [
     display: block;
   }
 
+  /* Load fade — see the script at the bottom of this file. */
+  @media (prefers-reduced-motion: no-preference) {
+    .project-detail__gallery img,
+    .project-detail__hero img {
+      transition: opacity 400ms ease;
+    }
+    .project-detail__gallery img.will-fade,
+    .project-detail__hero img.will-fade {
+      opacity: 0;
+    }
+    .project-detail__gallery img.will-fade.is-loaded,
+    .project-detail__hero img.will-fade.is-loaded {
+      opacity: 1;
+    }
+  }
+
   .project-detail__gallery figcaption {
     margin-top: var(--space-xs);
     font-size: var(--t-caption);
@@ -423,3 +439,15 @@ const meta = [
     }
   }
 </style>
+
+<script>
+  /* Fade in hero/gallery images that are still downloading when the
+     page arrives; cache hits show immediately. */
+  document
+    .querySelectorAll<HTMLImageElement>('.project-detail__gallery img, .project-detail__hero img')
+    .forEach((img) => {
+      if (img.complete) return;
+      img.classList.add('will-fade');
+      img.addEventListener('load', () => img.classList.add('is-loaded'), { once: true });
+    });
+</script>

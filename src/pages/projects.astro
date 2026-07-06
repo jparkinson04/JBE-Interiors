@@ -30,7 +30,9 @@ const projects = (await getCollection('projects')).sort(
                 <img
                   src={project.data.hero_image}
                   alt={`${project.data.name} — interior view`}
-                  loading={i < 2 ? 'eager' : 'lazy'}
+                  width="1800"
+                  height="1350"
+                  loading={i < 4 ? 'eager' : 'lazy'}
                   fetchpriority={i === 0 ? 'high' : 'auto'}
                   decoding="async"
                 />
@@ -57,6 +59,21 @@ const projects = (await getCollection('projects')).sort(
     </div>
   </section>
 </BaseLayout>
+
+<script>
+  /* Fade in card images that are still downloading when the page
+     arrives, instead of letting them pop in half-decoded. Images
+     already complete (cache hits) show immediately. */
+  document.querySelectorAll<HTMLImageElement>('.project-card__media img').forEach((img) => {
+    if (img.complete) return;
+    img.classList.add('will-fade');
+    img.addEventListener(
+      'load',
+      () => img.classList.add('is-loaded'),
+      { once: true }
+    );
+  });
+</script>
 
 <style>
   .projects-page__intro {
@@ -135,11 +152,23 @@ const projects = (await getCollection('projects')).sort(
 
   @media (prefers-reduced-motion: no-preference) {
     .project-card__media img {
-      transition: transform 600ms var(--ease-out);
+      transition:
+        transform 600ms var(--ease-out),
+        opacity 400ms ease;
     }
     .project-card__link:hover .project-card__media img,
     .project-card__link:focus-visible .project-card__media img {
       transform: scale(1.02);
+    }
+    /* Images still downloading when the page arrives are hidden by the
+       load-fade script (adds .will-fade, then .is-loaded on load), so
+       they fade in over the stone placeholder instead of popping in
+       half-decoded. No-JS or reduced-motion: images just show. */
+    .project-card__media img.will-fade {
+      opacity: 0;
+    }
+    .project-card__media img.will-fade.is-loaded {
+      opacity: 1;
     }
   }
 
