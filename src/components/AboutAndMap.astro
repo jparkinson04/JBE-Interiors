@@ -1,8 +1,8 @@
 ---
-/* About section — stats tiles above a two-column editorial block
-   (heading left, prose right), per the build spec's capabilities
-   layout. The UK map that used to sit here was removed at Jason's
-   request (July 2026). */
+/* About section — stats tiles above a two-column editorial block:
+   copy + CTA on the left, a photograph with an offset brand-grey
+   frame on the right. (The UK map that used to sit here was removed
+   at Jason's request, July 2026.) */
 ---
 
 <section class="about-map" aria-label="About JBE Interiors">
@@ -23,31 +23,49 @@
     </dl>
 
     <div class="about-map__grid">
-      <header class="about-map__header">
-        <p class="eyebrow">About</p>
-        <h2 class="about-map__heading">
-          Restaurant and retail fit&#8209;outs, from concept to handover.
-        </h2>
-      </header>
+      <div class="about-map__copy">
+        <header class="about-map__header">
+          <p class="eyebrow">About</p>
+          <h2 class="about-map__heading">
+            Restaurant and retail fit&#8209;outs, from concept to handover.
+          </h2>
+        </header>
 
-      <div class="about-map__body">
-        <p>
-          JBE Interiors delivers complete fit-out programmes for restaurant
-          and retail brands across the UK, Ireland, and Jersey. We work
-          directly with national chains, hospitality groups, and independent
-          operators.
-        </p>
-        <p>
-          Our scope covers everything from initial site survey through to
-          handover: programme management, principal contracting, joinery,
-          M&amp;E coordination, finishes, FF&amp;E install, and snagging.
-        </p>
-        <p>
-          We&rsquo;ve delivered sites for Wagamama, Nando&rsquo;s, and
-          independent operators including Sunday in Brooklyn, Black Tap,
-          Parsons, and Zelmans.
-        </p>
+        <div class="about-map__body">
+          <p>
+            JBE Interiors delivers complete fit-out programmes for restaurant
+            and retail brands across the UK, Ireland, and Jersey. We work
+            directly with national chains, hospitality groups, and independent
+            operators.
+          </p>
+          <p>
+            Our scope covers everything from initial site survey through to
+            handover: programme management, principal contracting, joinery,
+            M&amp;E coordination, finishes, FF&amp;E install, and snagging.
+          </p>
+          <p>
+            We&rsquo;ve delivered sites for Wagamama, Nando&rsquo;s, and
+            independent operators including Sunday in Brooklyn, Black Tap,
+            Parsons, and Zelmans.
+          </p>
+        </div>
+
+        <a href="/projects" class="about-map__cta">View our work &rarr;</a>
       </div>
+
+      <figure class="about-map__figure">
+        <img
+          src="/images/projects/nandos-waterloo-glasgow/hero.jpg"
+          alt="Nando's Waterloo Street, Glasgow — dining room beneath suspended copper-ring ceiling installations."
+          loading="lazy"
+          decoding="async"
+          width="1800"
+          height="1200"
+        />
+        <figcaption class="about-map__figure-caption">
+          Nando&rsquo;s, Waterloo Street, Glasgow
+        </figcaption>
+      </figure>
     </div>
   </div>
 </section>
@@ -64,8 +82,8 @@
     padding-inline: var(--grid-margin);
   }
 
-  /* Stats as three discrete boxes with breathing room between them.
-     Cream tiles with the brand-grey seam on the left. */
+  /* Stats as three discrete boxes. Values in large display serif so
+     the numbers carry weight at a glance. */
   .about-map__meta {
     margin: 0 0 var(--space-xl);
     padding: 0;
@@ -79,7 +97,7 @@
     padding: var(--space-m);
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 6px;
     border-left: 2px solid var(--accent);
   }
 
@@ -90,19 +108,25 @@
   .about-map__meta-tile dd {
     margin: 0;
     font-family: var(--font-serif);
-    font-weight: 400;
-    font-size: clamp(20px, 1.6vw, 26px);
+    font-weight: 300;
+    font-size: clamp(24px, 2vw, 32px);
     letter-spacing: -0.01em;
-    line-height: 1.15;
+    line-height: 1.1;
     color: var(--ink);
   }
 
-  /* Editorial split: heading column left, prose column right. */
+  /* Editorial split: copy column left, photograph right. */
   .about-map__grid {
     display: grid;
     grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
     gap: var(--space-xl);
-    align-items: start;
+    align-items: center;
+  }
+
+  .about-map__copy {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-l);
   }
 
   .about-map__header {
@@ -133,15 +157,75 @@
     max-width: 56ch;
   }
 
+  .about-map__cta {
+    align-self: flex-start;
+    font-size: var(--t-body-s);
+    font-weight: 500;
+    letter-spacing: var(--ls-button);
+    text-transform: uppercase;
+    color: var(--ink);
+    border-bottom: 1px solid var(--bone);
+    padding-bottom: 2px;
+  }
+
+  .about-map__cta:hover,
+  .about-map__cta:focus-visible {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+
+  /* Photograph with an offset brand-grey frame behind it — gives the
+     section depth without adding noise. Caption chip sits over the
+     bottom-left of the image. */
+  .about-map__figure {
+    margin: 0;
+    position: relative;
+  }
+
+  .about-map__figure::before {
+    content: '';
+    position: absolute;
+    inset: var(--space-s) calc(-1 * var(--space-s)) calc(-1 * var(--space-s)) var(--space-s);
+    background: var(--brand-grey);
+    z-index: 0;
+  }
+
+  .about-map__figure img {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    display: block;
+  }
+
+  .about-map__figure-caption {
+    position: absolute;
+    z-index: 2;
+    bottom: var(--space-s);
+    left: var(--space-s);
+    font-size: var(--t-eyebrow);
+    font-weight: 500;
+    letter-spacing: var(--ls-eyebrow);
+    text-transform: uppercase;
+    color: var(--paper);
+    background: rgba(17, 17, 17, 0.7);
+    padding: 6px 10px;
+  }
+
   @media (max-width: 900px) {
     .about-map__grid {
       grid-template-columns: 1fr;
       gap: var(--space-l);
+      align-items: start;
+    }
+    /* Keep the offset frame inside the viewport on small screens. */
+    .about-map__figure {
+      margin-right: var(--space-s);
     }
   }
 
-  /* Stats boxes: keep 3 across until the screen is too narrow for the
-     content; then drop to a single stacked column. */
   @media (max-width: 560px) {
     .about-map__meta {
       grid-template-columns: 1fr;
