@@ -5,7 +5,7 @@ const isWork = pathname === '/projects' || pathname.startsWith('/projects/');
 const isContact = pathname === '/contact' || pathname.startsWith('/contact/');
 ---
 
-<header class="site-header">
+<header class:list={["site-header", { "site-header--overlay": isHome }]}>
   <div class="site-header__inner">
     <a href="/" class="site-header__logo" aria-label="JBE Interiors — home">
       <img
@@ -35,6 +35,23 @@ const isContact = pathname === '/contact' || pathname.startsWith('/contact/');
     height: var(--header-height);
     background: var(--brand-grey);
     border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  }
+
+  /* On the homepage the bar starts transparent so the hero photography
+     runs to the very top of the viewport; a script swaps in .is-scrolled
+     (solid grey again) as soon as the visitor scrolls, keeping the nav
+     legible over page content. Other pages keep the solid bar. */
+  .site-header--overlay:not(.is-scrolled) {
+    background: transparent;
+    border-bottom-color: transparent;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .site-header--overlay {
+      transition:
+        background-color 300ms ease,
+        border-color 300ms ease;
+    }
   }
 
   .site-header__inner {
@@ -108,3 +125,15 @@ const isContact = pathname === '/contact' || pathname.startsWith('/contact/');
     }
   }
 </style>
+
+<script>
+  /* Solidify the overlay header as soon as the page scrolls. */
+  const header = document.querySelector('.site-header--overlay');
+  if (header) {
+    const onScroll = () => {
+      header.classList.toggle('is-scrolled', window.scrollY > 24);
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+  }
+</script>
