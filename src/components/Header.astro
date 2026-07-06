@@ -127,13 +127,38 @@ const isContact = pathname === '/contact' || pathname.startsWith('/contact/');
 </style>
 
 <script>
-  /* Solidify the overlay header as soon as the page scrolls. */
+  /* Solidify the overlay header once the page scrolls.
+
+     Hysteresis: turn solid past 72px but only turn transparent again
+     under 8px. A single threshold flaps while Lenis interpolates the
+     scroll position around it, which read as the bar glitching when
+     scrolling back up the hero. rAF-throttled so at most one class
+     change per frame. */
   const header = document.querySelector('.site-header--overlay');
   if (header) {
-    const onScroll = () => {
-      header.classList.toggle('is-scrolled', window.scrollY > 24);
+    const SOLID_AT = 72;
+    const CLEAR_AT = 8;
+    let ticking = false;
+
+    const update = () => {
+      ticking = false;
+      const y = window.scrollY;
+      if (y > SOLID_AT) {
+        header.classList.add('is-scrolled');
+      } else if (y < CLEAR_AT) {
+        header.classList.remove('is-scrolled');
+      }
+      /* Between the two thresholds: keep the current state. */
     };
-    onScroll();
+
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    };
+
+    update();
     window.addEventListener('scroll', onScroll, { passive: true });
   }
 </script>
