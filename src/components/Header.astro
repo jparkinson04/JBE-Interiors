@@ -8,10 +8,10 @@ const isContact = pathname === '/contact' || pathname.startsWith('/contact/');
   <div class="site-header__inner">
     <a href="/" class="site-header__logo" aria-label="JBE Interiors — home">
       <img
-        src="/assets/jbe-badge.jpg"
+        src="/assets/jbe-mark.png"
         alt="JBE Interiors"
-        width="447"
-        height="447"
+        width="430"
+        height="284"
         class="site-header__logo-img"
       />
     </a>
@@ -24,13 +24,15 @@ const isContact = pathname === '/contact' || pathname.startsWith('/contact/');
 </header>
 
 <style>
+  /* Header bar matches the badge's grey exactly, so the square logo
+     dissolves into the bar and reads as a single branded strip. */
   .site-header {
     position: fixed;
     inset: 0 0 auto 0;
     z-index: 50;
     height: var(--header-height);
-    background: var(--paper);
-    border-bottom: 1px solid var(--bone);
+    background: var(--brand-grey);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
   }
 
   .site-header__inner {
@@ -70,8 +72,19 @@ const isContact = pathname === '/contact' || pathname.startsWith('/contact/');
     font-weight: 500;
     letter-spacing: var(--ls-button);
     text-transform: uppercase;
-    color: var(--ink);
+    color: var(--brand-cream);
     padding-block: 4px;
+  }
+
+  .nav-link:hover {
+    color: #ffffff;
+  }
+
+  /* Grey focus ring (global default) is invisible on the grey bar —
+     use cream here so keyboard focus stays visible. */
+  .nav-link:focus-visible,
+  .site-header__logo:focus-visible {
+    outline-color: var(--brand-cream);
   }
 
   .nav-link.is-active::after {
@@ -81,7 +94,7 @@ const isContact = pathname === '/contact' || pathname.startsWith('/contact/');
     right: 0;
     bottom: -2px;
     height: 2px;
-    background: var(--accent);
+    background: var(--brand-cream);
   }
 
   @media (max-width: 640px) {

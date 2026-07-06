@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -)",
+      "Bash(/usr/bin/curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:4321/)",
+      "Bash(/usr/bin/curl -s http://localhost:4321/)",
+      "Bash(/usr/bin/curl -s -o /dev/null -w \"4322 status: %{http_code}\\\\n\" http://localhost:4322/)",
+      "Bash(/usr/bin/curl -s http://localhost:4322/)"
+    ]
+  }
+}

@@ -7,10 +7,10 @@ const year = new Date().getFullYear();
     <div class="site-footer__row">
       <a href="/" class="site-footer__logo" aria-label="JBE Interiors — home">
         <img
-          src="/assets/jbe-badge.jpg"
+          src="/assets/jbe-mark.png"
           alt="JBE Interiors"
-          width="447"
-          height="447"
+          width="430"
+          height="284"
           class="site-footer__logo-img"
         />
       </a>
@@ -62,8 +62,10 @@ const year = new Date().getFullYear();
 </footer>
 
 <style>
+  /* Footer matches the header's brand-grey strip so the page is framed
+     top and bottom by the same branded band. */
   .site-footer {
-    background: var(--ink);
+    background: var(--brand-grey);
     color: var(--paper);
     padding-block: var(--space-l);
   }
@@ -105,7 +107,7 @@ const year = new Date().getFullYear();
   }
 
   .site-footer__contact a:hover {
-    color: var(--accent);
+    color: var(--brand-cream);
   }
 
   .site-footer__dot {
@@ -132,7 +134,7 @@ const year = new Date().getFullYear();
   }
 
   .site-footer__social a:hover {
-    color: var(--accent);
+    color: var(--brand-cream);
   }
 
   .site-footer__rule {
@@ -157,8 +159,8 @@ const year = new Date().getFullYear();
   }
 
   .site-footer__meta a:hover {
-    color: var(--accent);
-    border-bottom-color: var(--accent);
+    color: var(--brand-cream);
+    border-bottom-color: var(--brand-cream);
   }
 
   @media (max-width: 768px) {

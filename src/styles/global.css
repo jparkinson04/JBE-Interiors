@@ -3,15 +3,21 @@
    token surface; per-component styles should consume these variables only. */
 
 :root {
+  /* Brand colours — confirmed by Jason (July 2026): white, cream
+     #e9e0c9, grey #616569. These two feed the palette below. */
+  --brand-grey: #616569;
+  --brand-cream: #e9e0c9;
+
   /* Colour — foundational */
   --ink: #111111;
   --paper: #f7f5f0;
-  --stone: #e8e4db;
-  --slate: #6b6862;
+  --stone: var(--brand-cream);   /* secondary surfaces / tiles */
+  --slate: var(--brand-grey);    /* secondary text, labels */
   --bone: #d4cfc2;
 
-  /* Colour — functional only */
-  --accent: #b85c3a;
+  /* Colour — functional accent. Was terracotta pre-branding; now the
+     brand grey so highlights sit inside the confirmed palette. */
+  --accent: var(--brand-grey);
 
   /* Typography — display */
   --t-display-xl: clamp(56px, 9vw, 128px);
