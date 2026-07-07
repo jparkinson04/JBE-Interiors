@@ -39,10 +39,16 @@ const meta = [
   <article class="project-detail">
     <div class="project-detail__container">
       <div class="project-detail__top">
-        <header class="project-detail__header">
-          <p class="eyebrow">{categoryLabel}</p>
-          <h1 class="project-detail__name">{data.name}</h1>
-        </header>
+        <div class="project-detail__intro">
+          <header class="project-detail__header">
+            <p class="eyebrow">{categoryLabel}</p>
+            <h1 class="project-detail__name">{data.name}</h1>
+          </header>
+
+          {data.description && (
+            <p class="project-detail__lead">{data.description.trim()}</p>
+          )}
+        </div>
 
         <figure class="project-detail__hero">
           <img
@@ -66,11 +72,7 @@ const meta = [
         </dl>
       )}
 
-      {data.description && (
-        <p class="project-detail__lead">{data.description.trim()}</p>
-      )}
-
-      {data.sections.length > 0 && (
+      {(data.sections.length > 0 || data.features.length > 0) && (
         <div class="project-detail__sections">
           {data.sections.map((section, idx) => (
             <section class="project-detail__section">
@@ -90,19 +92,19 @@ const meta = [
               )}
             </section>
           ))}
-        </div>
-      )}
 
-      {data.features.length > 0 && (
-        <section class="project-detail__section project-detail__section--features">
-          <header class="project-detail__section-head">
-            <span class="project-detail__section-number" aria-hidden="true">&mdash;</span>
-            <h2 class="project-detail__section-heading">Key features</h2>
-          </header>
-          <ul class="project-detail__bullets" role="list">
-            {data.features.map((f) => <li>{f}</li>)}
-          </ul>
-        </section>
+          {data.features.length > 0 && (
+            <section class="project-detail__section">
+              <header class="project-detail__section-head">
+                <span class="project-detail__section-number" aria-hidden="true">&mdash;</span>
+                <h2 class="project-detail__section-heading">Key features</h2>
+              </header>
+              <ul class="project-detail__bullets" role="list">
+                {data.features.map((f) => <li>{f}</li>)}
+              </ul>
+            </section>
+          )}
+        </div>
       )}
 
       {data.gallery.length > 0 && (
@@ -151,14 +153,20 @@ const meta = [
     padding-inline: var(--grid-margin);
   }
 
-  /* Opening split: title beside the hero image rather than beneath a
-     full-width banner. Title column left, photograph right. */
+  /* Opening split: title + lead beside the hero image rather than
+     beneath a full-width banner. Intro column left, photograph right. */
   .project-detail__top {
     display: grid;
     grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
     gap: var(--space-xl);
     align-items: center;
-    margin-bottom: var(--space-l);
+    margin-bottom: var(--space-m);
+  }
+
+  .project-detail__intro {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-m);
   }
 
   .project-detail__hero {
@@ -189,7 +197,7 @@ const meta = [
      project name so all the key details are visible immediately, no
      scroll required. Each tile is its own card, not a row of values. */
   .project-detail__meta {
-    margin: 0 0 var(--space-l);
+    margin: 0 0 var(--space-m);
     padding: 0;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -221,37 +229,36 @@ const meta = [
     line-height: 1.2;
   }
 
-  /* Lead paragraph (the card summary). Upright sans body-l, not italic
-     — reads as a clear intro line, not a flourish. */
+  /* Lead paragraph (the card summary) — sits under the title in the
+     opening split's intro column. */
   .project-detail__lead {
-    max-width: 720px;
-    margin: 0 0 var(--space-l);
+    margin: 0;
     font-size: var(--t-body-l);
-    color: var(--ink);
+    color: var(--slate);
     line-height: var(--lh-body);
+    max-width: 44ch;
   }
 
-  /* Body sections — each rendered as its own warm stone box. Number
-     marker + heading at top, then paragraphs and any bullets. Gap
-     between boxes gives breathing room without crowding. */
+  /* Body sections — warm stone boxes laid out two-up so the info sits
+     high on the page instead of stacking into a long scroll. A lone
+     trailing box spans the full row. */
   .project-detail__sections {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--space-m);
-    max-width: 920px;
+    align-items: start;
+  }
+
+  .project-detail__sections > .project-detail__section:last-child:nth-child(odd) {
+    grid-column: span 2;
   }
 
   .project-detail__section {
     background: var(--stone);
-    padding: var(--space-l);
+    padding: var(--space-m);
     display: flex;
     flex-direction: column;
     gap: var(--space-s);
-  }
-
-  .project-detail__section--features {
-    margin-top: var(--space-m);
-    max-width: 920px;
   }
 
   .project-detail__section-head {
@@ -427,8 +434,12 @@ const meta = [
     .project-detail__meta {
       grid-template-columns: 1fr 1fr;
     }
-    .project-detail__section {
-      padding: var(--space-m);
+    /* Sections stack single-column on mobile; undo the lone-box span. */
+    .project-detail__sections {
+      grid-template-columns: 1fr;
+    }
+    .project-detail__sections > .project-detail__section:last-child:nth-child(odd) {
+      grid-column: auto;
     }
     .project-detail__gallery {
       grid-template-columns: 1fr;
