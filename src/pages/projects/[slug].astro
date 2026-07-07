@@ -110,7 +110,7 @@ const meta = [
               <img
                 src={img.image}
                 alt={img.caption ?? `${data.name} detail`}
-                loading="lazy"
+                loading="eager"
                 decoding="async"
               />
               {img.caption && <figcaption>{img.caption}</figcaption>}
