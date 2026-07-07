@@ -37,21 +37,23 @@ const meta = [
 
 <BaseLayout title={`${data.name} — JBE Interiors`} description={data.description.slice(0, 150)}>
   <article class="project-detail">
-    <figure class="project-detail__hero">
-      <img
-        src={data.hero_image}
-        alt={`${data.name} — interior view`}
-        loading="eager"
-        fetchpriority="high"
-        decoding="async"
-      />
-    </figure>
-
     <div class="project-detail__container">
-      <header class="project-detail__header">
-        <p class="eyebrow">{categoryLabel}</p>
-        <h1 class="project-detail__name">{data.name}</h1>
-      </header>
+      <div class="project-detail__top">
+        <header class="project-detail__header">
+          <p class="eyebrow">{categoryLabel}</p>
+          <h1 class="project-detail__name">{data.name}</h1>
+        </header>
+
+        <figure class="project-detail__hero">
+          <img
+            src={data.hero_image}
+            alt={`${data.name} — interior view`}
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+          />
+        </figure>
+      </div>
 
       {meta.length > 0 && (
         <dl class="project-detail__meta">
@@ -138,17 +140,30 @@ const meta = [
 
 <style>
   .project-detail {
-    /* Breathing room between the fixed header bar and the hero image
-       so the photo doesn't sit tight against the grey band. */
+    /* Breathing room between the fixed header bar and the page top. */
     padding-top: var(--space-m);
     padding-bottom: var(--space-l);
   }
 
-  /* Hero — wide-cinematic ratio. Doesn't dominate above-the-fold. */
+  .project-detail__container {
+    max-width: var(--grid-max);
+    margin-inline: auto;
+    padding-inline: var(--grid-margin);
+  }
+
+  /* Opening split: title beside the hero image rather than beneath a
+     full-width banner. Title column left, photograph right. */
+  .project-detail__top {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: var(--space-xl);
+    align-items: center;
+    margin-bottom: var(--space-l);
+  }
+
   .project-detail__hero {
     margin: 0;
-    aspect-ratio: 21 / 9;
-    max-height: 48vh;
+    aspect-ratio: 3 / 2;
     overflow: hidden;
   }
 
@@ -160,25 +175,14 @@ const meta = [
     display: block;
   }
 
-  .project-detail__container {
-    max-width: var(--grid-max);
-    margin-inline: auto;
-    padding-inline: var(--grid-margin);
-    padding-top: var(--space-l);
-  }
-
-  .project-detail__header {
-    max-width: 880px;
-    margin-bottom: var(--space-m);
-  }
-
   .project-detail__name {
     font-size: var(--t-display-l);
     font-weight: 300;
     letter-spacing: -0.025em;
-    line-height: 1;
+    line-height: 1.05;
     color: var(--ink);
     margin-top: var(--space-xs);
+    text-wrap: balance;
   }
 
   /* Meta tile grid — small stone-toned boxes sit directly under the
@@ -411,9 +415,14 @@ const meta = [
   }
 
   @media (max-width: 720px) {
+    /* Stack the opening split: title above, image below. */
+    .project-detail__top {
+      grid-template-columns: 1fr;
+      gap: var(--space-m);
+      margin-bottom: var(--space-m);
+    }
     .project-detail__hero {
       aspect-ratio: 4 / 3;
-      max-height: 60vh;
     }
     .project-detail__meta {
       grid-template-columns: 1fr 1fr;
