@@ -27,9 +27,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         </header>
 
         <div class="contact__primary reveal reveal--d1">
-          <a href="tel:+441302322202" class="contact__phone" aria-label="Call 01302 322 202">
-            01302&nbsp;322&nbsp;202
-          </a>
           <a href="mailto:jason@jbeinteriors.com" class="contact__email">
             jason@jbeinteriors.com
           </a>
@@ -40,7 +37,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             <dt class="eyebrow">Address</dt>
             <dd class="contact__meta-primary">305 Churchway</dd>
             <dd class="contact__meta-secondary">Doncaster, DN1&nbsp;2TB</dd>
-            <dd class="contact__meta-secondary">Mon&ndash;Fri, 8:30am&ndash;6pm</dd>
           </div>
 
           <div class="contact__meta-col">
@@ -59,20 +55,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                   <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
                 </svg>
                 <span>@jbeinteriorsltd</span>
-              </a>
-            </dd>
-            <dd class="contact__meta-primary">
-              <a
-                class="contact__social-link"
-                href="https://www.linkedin.com/company/jbe-interiors/"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="LinkedIn — JBE Interiors"
-              >
-                <svg class="contact__social-icon" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.26 2.37 4.26 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z" />
-                </svg>
-                <span>JBE Interiors</span>
               </a>
             </dd>
           </div>
@@ -217,27 +199,22 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     gap: var(--space-s);
   }
 
-  .contact__phone {
-    font-family: var(--font-serif);
-    font-size: clamp(32px, 3.8vw, 52px);
-    font-weight: 300;
-    letter-spacing: -0.02em;
-    line-height: 1;
-    color: var(--ink);
-    display: inline-block;
-  }
-
-  .contact__phone:hover,
   .contact__email:hover,
   .contact__social-link:hover {
     color: var(--accent);
   }
 
+  /* With the office number gone, the email is the page's focal
+     action — large display serif, same treatment the phone had. */
   .contact__email {
-    font-size: var(--t-body-m);
+    font-family: var(--font-serif);
+    font-size: clamp(26px, 3vw, 42px);
+    letter-spacing: -0.015em;
+    line-height: 1.1;
     color: var(--ink);
     border-bottom: 1px solid var(--bone);
-    padding-bottom: 2px;
+    padding-bottom: 4px;
+    overflow-wrap: anywhere;
   }
 
   /* Two meta blocks side-by-side — Studio and Follow — with generous

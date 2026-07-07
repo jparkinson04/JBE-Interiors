@@ -71,10 +71,10 @@ const isContact = pathname === '/contact' || pathname.startsWith('/contact/');
     color: var(--ink);
   }
 
-  /* Small Interiors logo in top-left. Spec sets header logo height at
-     32px desktop / 28px mobile; width auto-scales. */
+  /* Interiors logo in top-left — sized to match the footer logo (40px)
+     per Jason, so the mark reads consistently at both ends of the page. */
   .site-header__logo-img {
-    height: 32px;
+    height: 40px;
     width: auto;
     display: block;
   }
@@ -118,7 +118,7 @@ const isContact = pathname === '/contact' || pathname.startsWith('/contact/');
 
   @media (max-width: 640px) {
     .site-header__logo-img {
-      height: 28px;
+      height: 36px;
     }
     .site-header__nav {
       gap: var(--space-s);
