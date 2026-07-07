@@ -74,34 +74,30 @@ const meta = [
 
       {(data.sections.length > 0 || data.features.length > 0) && (
         <div class="project-detail__sections">
-          {data.sections.map((section, idx) => (
+          {data.sections.map((section) => (
             <section class="project-detail__section">
-              <header class="project-detail__section-head">
-                <span class="project-detail__section-number">
-                  {String(idx + 1).padStart(2, '0')}
-                </span>
-                <h2 class="project-detail__section-heading">{section.heading}</h2>
-              </header>
-              {section.paragraphs.map((para) => (
-                <p>{para}</p>
-              ))}
-              {section.bullets.length > 0 && (
-                <ul class="project-detail__bullets" role="list">
-                  {section.bullets.map((b) => <li>{b}</li>)}
-                </ul>
-              )}
+              <h2 class="project-detail__section-heading">{section.heading}</h2>
+              <div class="project-detail__section-body">
+                {section.paragraphs.map((para) => (
+                  <p>{para}</p>
+                ))}
+                {section.bullets.length > 0 && (
+                  <ul class="project-detail__bullets" role="list">
+                    {section.bullets.map((b) => <li>{b}</li>)}
+                  </ul>
+                )}
+              </div>
             </section>
           ))}
 
           {data.features.length > 0 && (
             <section class="project-detail__section">
-              <header class="project-detail__section-head">
-                <span class="project-detail__section-number" aria-hidden="true">&mdash;</span>
-                <h2 class="project-detail__section-heading">Key features</h2>
-              </header>
-              <ul class="project-detail__bullets" role="list">
-                {data.features.map((f) => <li>{f}</li>)}
-              </ul>
+              <h2 class="project-detail__section-heading">Key features</h2>
+              <div class="project-detail__section-body">
+                <ul class="project-detail__bullets" role="list">
+                  {data.features.map((f) => <li>{f}</li>)}
+                </ul>
+              </div>
             </section>
           )}
         </div>
@@ -239,59 +235,45 @@ const meta = [
     max-width: 44ch;
   }
 
-  /* Body sections — warm stone boxes laid out two-up so the info sits
-     high on the page instead of stacking into a long scroll. A lone
-     trailing box spans the full row. */
+  /* Body sections — a clean editorial ledger: heading in the left
+     column, copy in the right, thin rules between rows. Same layout
+     language as the About section; no boxes, no numbering. */
   .project-detail__sections {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-m);
-    align-items: start;
-  }
-
-  .project-detail__sections > .project-detail__section:last-child:nth-child(odd) {
-    grid-column: span 2;
+    border-top: 1px solid var(--bone);
+    margin-bottom: var(--space-l);
   }
 
   .project-detail__section {
-    background: var(--stone);
-    padding: var(--space-m);
+    display: grid;
+    grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+    gap: var(--space-l);
+    padding-block: var(--space-m);
+    border-bottom: 1px solid var(--bone);
+    align-items: start;
+  }
+
+  .project-detail__section-heading {
+    font-family: var(--font-serif);
+    font-size: clamp(20px, 1.7vw, 26px);
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    line-height: 1.2;
+    color: var(--ink);
+    margin: 0;
+    max-width: 20ch;
+  }
+
+  .project-detail__section-body {
     display: flex;
     flex-direction: column;
     gap: var(--space-s);
   }
 
-  .project-detail__section-head {
-    display: flex;
-    align-items: baseline;
-    gap: var(--space-s);
-    margin-bottom: 4px;
-  }
-
-  .project-detail__section-number {
-    font-family: var(--font-serif);
-    font-size: clamp(15px, 1vw, 18px);
-    font-weight: 400;
-    color: var(--accent);
-    line-height: 1;
-    flex-shrink: 0;
-  }
-
-  .project-detail__section-heading {
-    font-family: var(--font-serif);
-    font-size: clamp(22px, 1.8vw, 28px);
-    font-weight: 400;
-    letter-spacing: -0.015em;
-    line-height: 1.15;
-    color: var(--ink);
-    margin: 0;
-  }
-
-  .project-detail__section p {
+  .project-detail__section-body p {
     font-size: var(--t-body-m);
     color: var(--ink);
     line-height: var(--lh-body);
-    max-width: 70ch;
+    max-width: 66ch;
   }
 
   .project-detail__bullets {
@@ -434,12 +416,10 @@ const meta = [
     .project-detail__meta {
       grid-template-columns: 1fr 1fr;
     }
-    /* Sections stack single-column on mobile; undo the lone-box span. */
-    .project-detail__sections {
+    /* Ledger rows stack: heading above its copy. */
+    .project-detail__section {
       grid-template-columns: 1fr;
-    }
-    .project-detail__sections > .project-detail__section:last-child:nth-child(odd) {
-      grid-column: auto;
+      gap: var(--space-s);
     }
     .project-detail__gallery {
       grid-template-columns: 1fr;
