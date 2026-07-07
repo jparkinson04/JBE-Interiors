@@ -138,6 +138,9 @@ const meta = [
 
 <style>
   .project-detail {
+    /* Breathing room between the fixed header bar and the hero image
+       so the photo doesn't sit tight against the grey band. */
+    padding-top: var(--space-m);
     padding-bottom: var(--space-l);
   }
 
@@ -356,6 +359,16 @@ const meta = [
 
   @media (min-width: 720px) {
     .project-detail__gallery figure:nth-child(5n + 1) {
+      grid-column: span 2;
+      aspect-ratio: 21 / 9;
+    }
+
+    /* A trailing image that would sit alone (leaving an empty cell
+       bottom-right) stretches across both columns instead. With the
+       5n+1 full-width rhythm above, the lone-tile cases are exactly
+       last children at positions 5n+2 and 5n+4. */
+    .project-detail__gallery figure:last-child:nth-child(5n + 2),
+    .project-detail__gallery figure:last-child:nth-child(5n + 4) {
       grid-column: span 2;
       aspect-ratio: 21 / 9;
     }
